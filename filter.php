@@ -14,12 +14,16 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
             <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         };
 
 
@@ -29,12 +33,16 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
             <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         };
 
 
@@ -44,12 +52,16 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
             <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         };
 
 
@@ -59,12 +71,16 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
             <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         };
 
 
@@ -76,12 +92,16 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
                   <p>Open Positions: ".$row['open_Positions']."</p> 
-                  "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+                  "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         }
 
     }
@@ -90,12 +110,16 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
             <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         };
 
 
@@ -105,12 +129,16 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
             <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         };
 
 
@@ -120,12 +148,16 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
             <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         };
 
 
@@ -138,12 +170,16 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
             <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         }
 
     }
@@ -152,12 +188,16 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
             <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         };
 
 
@@ -167,12 +207,16 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
             <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         };
 
 
@@ -182,20 +226,32 @@ if(isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result))
         {
+            if($row['CV']==1) {
+                $msg = "Yes";
+            }
+            else {
+                $msg = "No";
+            }
             echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
             <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            if($row['CV']==1){echo "yes";}
-            else{echo "no";}
         };
 
 
     }
 
-    else {
-//        $sql = "SELECT * FROM internships";
-//        $result = mysqli_query($conn, $sql);
-echo "These are not the results you are loooking for";
+    elseif ($_POST['duration'] == '""'&& $_POST['internship_Level']=='""') {
+        $sql = "SELECT * FROM internships";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_array($result))
+        {
+            echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
+            <p>Open Positions: ".$row['open_Positions']."</p> 
+            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+
+        };
+
+
     }
 }
