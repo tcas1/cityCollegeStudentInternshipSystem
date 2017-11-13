@@ -1,4 +1,5 @@
 <?php
+include 'dbh.php';
 
 $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 $invalidEmail = "";
@@ -20,9 +21,37 @@ elseif (strpos($url, 'error=invalidemail')!==false){
 elseif (strpos($url, 'signup=success')!==false){
     echo "Congratulations, you have successfully registered. Please enter your username and password at the top of this page to login.";
 }
+
+
+
+
+
+
+$sql="SELECT * FROM internships ORDER BY internship_Id DESC LIMIT 10";
+
+$result = mysqli_query($conn, $sql);
+
+
+while($row = mysqli_fetch_array($result))
+{
+    if($row['CV']==1) {
+        $msg = "Yes";
+    }
+    else {
+        $msg = "No";
+    }
+
+    echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
+    <p>Open Positions: ".$row['open_Positions']."</p> 
+    "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
+
+}
 ?>
 
+
 <html>
+<link rel="stylesheet" type="text/css" href="css/internships.css">
+
 <style>
     .error {color: #FF0000;
         font-style: italic;
