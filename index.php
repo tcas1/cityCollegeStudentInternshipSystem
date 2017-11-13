@@ -5,6 +5,8 @@
  * Date: 10/16/2017
  * Time: 10:44 PM
  */
+session_start();
+
 include 'header.php';
 include 'dbh.php';
 ?>

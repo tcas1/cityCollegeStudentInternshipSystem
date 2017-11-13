@@ -8,4 +8,13 @@
 include 'header.php';
 
 echo "My Account!!!!!!";
-
+?>
+<html>
+<nav>
+    <ul>
+        <li><a href="myAccount.php">My Account</a> </li>
+        <li><a href="myCurrentListings.php">My Current Internships</a> </li>
+        <li><a href="myPastListings.php">My Past Internships</a></li>
+    </ul>
+</nav>
+</html>

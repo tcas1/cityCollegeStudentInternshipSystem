@@ -16,7 +16,7 @@ if(!$row=mysqli_fetch_assoc($result)) {
     header("Location: ../landingPage.php");
 }
 else{
-    $_SESSION['id'] = $row['id'];
+    $_SESSION['id'] = $row['Id'];
     $_SESSION['email'] = $row['email'];
     /* landing page once user logs in*/
     header("Location: ../index.php");
