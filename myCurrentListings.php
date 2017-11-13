@@ -1,3 +1,16 @@
+<html>
+<link rel="stylesheet" type="text/css" href="css/internships.css">
+<h1>My Current Internships</h1>
+
+<nav>
+    <ul>
+        <li><a href="myAccount.php">My Account</a> </li>
+        <li><a href="myCurrentListings.php">My Current Internships</a> </li>
+        <li><a href="myPastListings.php">My Past Internships</a></li>
+    </ul>
+</nav>
+</html>
+
 <?php
 /**
  * Created by PhpStorm.
@@ -31,9 +44,5 @@ while($row = mysqli_fetch_array($result))
 
 }
 ?>
-<html>
-<link rel="stylesheet" type="text/css" href="css/internships.css">
-
-</html>
 
 

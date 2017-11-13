@@ -7,9 +7,10 @@
  */
 include 'header.php';
 
-echo "My Account!!!!!!";
 ?>
 <html>
+<h1>My Account</h1>
+
 <nav>
     <ul>
         <li><a href="myAccount.php">My Account</a> </li>
