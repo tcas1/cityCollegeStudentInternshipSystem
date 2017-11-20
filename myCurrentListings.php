@@ -23,9 +23,14 @@ session_start();
 include 'dbh.php';
 include 'header.php';
 
-$sql="SELECT * FROM internships WHERE poster_Id='{$_SESSION['id']}'";
+$sql="SELECT * FROM internships WHERE datetime > CURRENT_DATE AND poster_Id='{$_SESSION['id']}' ";
 
 $result = mysqli_query($conn, $sql);
+if (!$result) {
+    printf("Error: %s\n", mysqli_error($conn));
+
+    exit();
+}
 
 echo "<div class=\"Example\">"."<a href=\"Listingcreator.php\">Create an internship.</a></div> ";
 
