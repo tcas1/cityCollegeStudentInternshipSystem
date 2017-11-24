@@ -1,0 +1,52 @@
+
+hr {
+    
+    border: solid 1px;
+}
+
+div.vertical-line{
+      width: 1px; /* Use only border style */
+      height: 100%;
+      float: left; 
+      border: 1px inset; /* This is default border style for <hr> tag */
+    }
+div.Listing {
+    background-color: #ededed;
+    color: #000000;
+    width: 60%;
+    padding: 63px 15px;
+    text-align: left;
+    border-width:0.2px;
+    border-style:solid;
+}
+div.Example {
+    background-color: #ededed;
+    color: #000000;
+    opacity: 0.7;
+    width: 60%;
+    padding: 63px 15px;
+    text-align: left;
+    border-width:2px;
+    border-style:dashed dashed solid dashed;
+}
+div.filter{
+
+    margin-left: 300px;
+    border-left: 1px solid gray;
+    padding: 1em;
+}
+
+hr{
+    width: 61.6%;
+    margin: 0 auto;
+}
+h2{
+    text-align: center;
+}
+p {
+    float: right;
+
+}
+p:nth-child(1) {
+    float: right;
+}

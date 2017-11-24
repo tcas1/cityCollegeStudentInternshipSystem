@@ -21,13 +21,9 @@ elseif (strpos($url, 'error=invalidemail')!==false){
 elseif (strpos($url, 'signup=success')!==false){
     echo "Congratulations, you have successfully registered. Please enter your username and password at the top of this page to login.";
 }
-
-
-
-
-
-
 ?>
+
+
 
 <html>
 <head>
@@ -68,7 +64,7 @@ elseif (strpos($url, 'signup=success')!==false){
         <div class = "col-xs-6 col-sm-6 col-md-6 col-lg-6" name="announced_iternships">
 
             <!-- Here we put announced internships-->
-<?php
+            <?php
             $sql="SELECT * FROM internships ORDER BY internship_Id DESC LIMIT 10";
 
             $result = mysqli_query($conn, $sql);
@@ -76,14 +72,14 @@ elseif (strpos($url, 'signup=success')!==false){
 
             while($row = mysqli_fetch_array($result))
             {
-            if($row['CV']==1) {
-            $msg = "Yes";
-            }
-            else {
-            $msg = "No";
-            }
+                if($row['CV']==1) {
+                    $msg = "Yes";
+                }
+                else {
+                    $msg = "No";
+                }
 
-            echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']."
+                echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']."
                 <p>Open Positions: ".$row['open_Positions']."</p>
                 "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
@@ -93,21 +89,34 @@ elseif (strpos($url, 'signup=success')!==false){
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 col-md-offset-1" style = "background-color: #dedef8;
                                                             box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; border-radius: 10px">
             <div style = "text-align: center;">
-                <h4> Login </h4>
+                <h4> Register </h4>
             </div>
 
-            <form action='includes/login_inc.php' method='post' class="form-signin" role="form">
+
+
+
+            <form action='includes/signup_inc.php' method='post' class="form-signin" role="form">
+
+                <label for="inputEmail" style="display: inline-block; width: 48%; text-align: center;"> First Name:</label>
+                <input name="firstName" type="text"  class="form-control" placeholder="First Name" required style="display: inline-block; width: 50%">
+                <br><br>
+
+                <label for="inputEmail" style="display: inline-block; width: 48%; text-align: center;"> Last Name:</label>
+                <input name="lastName" type="text"  class="form-control" placeholder="Last Name" required style="display: inline-block; width: 50%">
+                <br><br>
 
                 <label for="inputEmail" style="display: inline-block; width: 48%; text-align: center; "> email:</label>
-                <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address"
-                       required autofocus style="display: inline-block; width: 50%">
+                <span class="error"><?php echo $invalidEmail;?></span>
+                <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus style="display: inline-block; width: 50%">
+
+
                 <br><br>
                 <label for="inputEmail" style="display: inline-block; width: 48%; text-align: center;"> password:</label>
                 <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required style="display: inline-block; width: 50%">
                 <br><br>
                 <div align="center">
-                    <button class="btn btn-primary btn-block btn-signin" type="submit" style="width: 60%;margin-left: 8%">Login</button>
-                    <a href="register.php">Register</a>
+                    <button class="btn btn-primary btn-block btn-signin" type="submit" style="width: 60%;margin-left: 8%">Sign up</button>
+                    <a href="landingPage.php">login</a>
                 </div>
             </form>
 
@@ -117,4 +126,3 @@ elseif (strpos($url, 'signup=success')!==false){
 
 </div>
 </body>
-</html>

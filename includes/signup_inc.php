@@ -10,7 +10,7 @@ $email=$_POST['email'];
 
 //check if any of the fields are empty
 if(empty($firstName) || empty($lastName) || empty($password) || empty($email)){
-    header("Location: ../landingPage.php?error=empty");
+    header("Location: ../register.php?error=empty");
     exit();
 }
 
@@ -23,13 +23,14 @@ else {
     $emailcheck=mysqli_num_rows($result);
 
    if($emailcheck>0){
-        header("Location: ../landingPage.php?error=email");
+        header("Location: ../register.php?error=email");
         exit();
     }
     elseif(strpos($email, '@city.academic.gr')==false){
-        header("Location: ../landingPage.php?error=invalidemail");
+        header("Location: ../register.php?error=invalidemail");
         exit();
     }
+
 
     else{
     //filter_var($email, FILTER_VALIDATE_EMAIL);
