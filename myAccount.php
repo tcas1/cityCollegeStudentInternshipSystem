@@ -3,6 +3,27 @@
 session_start();
 
 include 'dbh.php';
+
+if(isset($_POST['update'])){
+
+    $email=$_POST['email'];
+    $firstName=$_POST['firstName'];
+    $lastName=$_POST['lastName'];
+
+    $sql= "UPDATE users SET firstName='$firstName',lastName='$lastName',email='$email' WHERE Id='{$_SESSION['id']}'";
+    $result = mysqli_query($conn, $sql);
+    if(!$result )
+    {
+        echo "Could not update data:";
+    }
+    else
+    {
+        echo "Updated data successfully\n";
+    }
+
+}
+
+
 ?>
 
 <html>
@@ -61,7 +82,16 @@ include 'dbh.php';
         </div>
         <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <!--Internships-->
-            <h1>My Account</h1>
+            <?php echo "<h1> {$_SESSION['firstName']} {$_SESSION['lastName']}'s Account</h1>"; ?>
+            <br><br>
+            <form method="POST" action="myAccount.php">
+                <input placeholder="First Name" value="<?php echo "{$_SESSION['firstName']}"?>" name="firstName" type="text"><br><br>
+                <input placeholder="Last Name" value="<?php echo "{$_SESSION['lastName']}"?>" name="lastName" type="text"><br><br>
+                <input placeholder="Email" value="<?php echo "{$_SESSION['email']}"?>" name="email" type="email"><br><br>
+                <button type="submit" name="update">Update Info</button>
+            </form>
+
+
 
 
         </div>
