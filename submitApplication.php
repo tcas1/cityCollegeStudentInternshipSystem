@@ -3,14 +3,7 @@ session_start();
 
 include 'dbh.php';
 
-    $email=$_POST['email'];
-    $firstName=$_POST['firstName'];
-    $lastName=$_POST['lastName'];
-    $level=$_POST['level'];
-    $getid=$_REQUEST['id'];
-    $sql = "INSERT INTO applications (firstName,lastName,email,level, internship_Id) VALUES ('{$_SESSION['firstName']}','{$_SESSION['lastName']}','{$_SESSION['email']}','$level','$getid')";
-    $result = mysqli_query($conn, $sql);
-    header("Location: index.php?submitapp=success");
+
 
 
 ?>
@@ -65,7 +58,7 @@ include 'dbh.php';
 					<div class="panel-heading">
 						<br>
 						<div id="content">
-                            <form method="POST" action="submitApplication.php">
+                            <form method="POST" action="">
 <!--				<input type="hidden" name="size" value="1000000" />-->
 					<div>
 						 First Name: <input placeholder="First Name" value="<?php echo "{$_SESSION['firstName']}"?>" name="firstName" type="text" readonly><br><br> <!-- Pull first name from db-->
@@ -112,11 +105,22 @@ include 'dbh.php';
                             <?php echo "<a href='viewInternship.php?id=".$_GET['id']."'> <button class=\"btn btn-primary\" type=\"reset\" style=\"width: 10%;margin-left: 8%\">Back</a>";?>
 
 						<!--<a href=""> <button class="btn btn-primary" type="submit" style="width: 10%;margin-left: 70%">Apply</button>-->
-                                <button class="btn btn-primary "  type="submit" style="width: 10%;margin-left: 70%">Apply</button>
+                                <button class="btn btn-primary " name="Submit" type="submit" style="width: 10%;margin-left: 70%">Apply</button>
                             </form>
                         </div>
                 </div>
 		</div>
 	</div>
 </body>
+<?php
+if(isset($_POST['Submit'])) {
+
+    $level = $_POST['level'];
+    $getid = $_REQUEST['id'];
+    $sql = "INSERT INTO applications (firstName,lastName,email,level, internship_Id) VALUES ('{$_SESSION['firstName']}','{$_SESSION['lastName']}','{$_SESSION['email']}','$level','$getid')";
+    $result = mysqli_query($conn, $sql);
+    header("Location: index.php?submitapp=success");
+
+}
+?>
 </html>
