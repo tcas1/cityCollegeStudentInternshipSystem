@@ -2,6 +2,7 @@
 session_start();
 
 include 'dbh.php';
+
 ?>
 <html>
 <head>
@@ -53,13 +54,13 @@ include 'dbh.php';
                           ?>				      </div>
     			</div>
 				<div class="panel panel-info">
-<!--					<div class="panel-heading">-->
-<!--							<!--                    Internship title-->
+                <!--<div class="panel-heading">-->
+<!--							<!--Internship title-->
 <!---->
-<!--					</div>-->
+                <!--</div>-->
 					<div class="panel-heading">
 						<br>
-							<!--                    Internship description-->
+							<!--Internship description-->
 							<?php
             				$sql="SELECT * FROM internships WHERE internship_Id='".$_GET['id']."'";
 

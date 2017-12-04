@@ -66,7 +66,7 @@ elseif (strpos($url, 'signup=success')!==false){
     <hr>
     <div class = "row" >
         <div class = "col-xs-6 col-sm-6 col-md-6 col-lg-6" name="announced_iternships">
-
+            <div style="overflow-y: scroll; height:400px;">
             <!-- Here we put announced internships-->
 <?php
             $sql="SELECT * FROM internships ORDER BY internship_Id DESC LIMIT 10";
@@ -89,6 +89,7 @@ elseif (strpos($url, 'signup=success')!==false){
 
             }
             ?>
+            </div>
         </div>
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 col-md-offset-1" style = "background-color: #dedef8;
                                                             box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; border-radius: 10px">

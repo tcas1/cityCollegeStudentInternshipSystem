@@ -60,35 +60,21 @@ include 'dbh.php';
             </nav>
         </div>
         <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
-            <!--                    Internships-->
-            <h1>My Current Internships</h1>
-
-            <br>
             <?php
+            $sql="SELECT * FROM applications WHERE internship_Id='".$_GET['id']."'";
+                $result = mysqli_query($conn, $sql);
 
-            $sql="SELECT * FROM internships WHERE datetime > CURRENT_DATE AND poster_Id='{$_SESSION['id']}' ";
+                while($row = mysqli_fetch_array($result))
+                {
+//                if($row['CV']==1) {
+//                $msg = "Yes";
+//                }
+//                else {
+//                $msg = "No";
+//                }
 
-            $result = mysqli_query($conn, $sql);
-            if (!$result) {
-                printf("Error: %s\n", mysqli_error($conn));
-
-                exit();
-            }
-
-            echo "<div class=\"Example\">"."<a href=\"Listingcreator.php\">Create an internship.</a></div> ";
-
-            while($row = mysqli_fetch_array($result))
-            {
-                if($row['CV']==1) {
-                    $msg = "Yes";
-                }
-                else {
-                    $msg = "No";
-                }
-
-                echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
-    <p>Open Positions: ".$row['open_Positions']."</p> 
-    "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg <a href='viewApplicants.php?id=".$row['internship_Id']."'>View Applicants</a></div>";
+                echo "<div class=\"Listing\">"."First Name: ".$row['firstName']."<p>Last Name: ".$row['lastName']."</p><br>"." email: ".$row['email']."
+                    </div>";
 
             }
             ?>
@@ -98,6 +84,3 @@ include 'dbh.php';
 </div>
 </body>
 </html>
-
-
-

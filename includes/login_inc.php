@@ -22,6 +22,8 @@ else{
     $_SESSION['email'] = $row['email'];
     $_SESSION['firstName'] = $row['firstName'];
     $_SESSION['lastName'] = $row['lastName'];
+    $_SESSION['level'] = $row['level'];
+
 
     /* landing page once user logs in*/
     header("Location: ../index.php");

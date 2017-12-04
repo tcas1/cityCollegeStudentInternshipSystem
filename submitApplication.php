@@ -2,6 +2,17 @@
 session_start();
 
 include 'dbh.php';
+
+    $email=$_POST['email'];
+    $firstName=$_POST['firstName'];
+    $lastName=$_POST['lastName'];
+    $level=$_POST['level'];
+    $getid=$_REQUEST['id'];
+    $sql = "INSERT INTO applications (firstName,lastName,email,level, internship_Id) VALUES ('{$_SESSION['firstName']}','{$_SESSION['lastName']}','{$_SESSION['email']}','$level','$getid')";
+    $result = mysqli_query($conn, $sql);
+    header("Location: index.php?submitapp=success");
+
+
 ?>
 <html>
 <head>
@@ -54,8 +65,8 @@ include 'dbh.php';
 					<div class="panel-heading">
 						<br>
 						<div id="content">
-                            <form method="post" action="uploadForm.php" enctype="multipart/form-data">
-				<input type="hidden" name="size" value="1000000" />
+                            <form method="POST" action="submitApplication.php">
+<!--				<input type="hidden" name="size" value="1000000" />-->
 					<div>
 						 First Name: <input placeholder="First Name" value="<?php echo "{$_SESSION['firstName']}"?>" name="firstName" type="text" readonly><br><br> <!-- Pull first name from db-->
 					</div>
@@ -69,14 +80,14 @@ include 'dbh.php';
 					</div>
 
 					<div>
-						Level: <form method="post">
+						Level:
         						<select name="level">
                                     <option value="level1">Level 1</option>
                                     <option value="level2">Level 2</option>
                                     <option value="level3">Level 3</option>
                                     <option value="Graduate">Graduate</option>
         						</select>
-							</form>
+
 					</div>
 						</br>
 					<div>
@@ -89,7 +100,7 @@ include 'dbh.php';
                         while($row = mysqli_fetch_array($result))
                         {
                         if($row['CV']==1) {
-                            echo "CV: <input type = 'file' name = 'cv'>";
+                            echo "CV: <input type = 'file' name = 'CV'>";
                           }
                         else{
                             echo "No CV Required";
@@ -97,23 +108,14 @@ include 'dbh.php';
                         }
                         ?>
 					</div>
-                            </form>
 						<br>
                             <?php echo "<a href='viewInternship.php?id=".$_GET['id']."'> <button class=\"btn btn-primary\" type=\"reset\" style=\"width: 10%;margin-left: 8%\">Back</a>";?>
 
-<!--                            <a href="viewInternship.php"><button class="btn btn-primary" type="reset" style="width: 10%;margin-left: 8%">Back</button>-->
-							<div class="popup">
-						<a href=""> <button class="btn btn-primary" type="submit" style="width: 10%;margin-left: 70%">Apply</button>
-							<span class="popuptext" id="myPopup">
-							Are you sure you want to apply?
-							<br>
-							<button class="btn btn-primary  btn-signin" type="reset" style= "margin-left: 70%" onclick="myFunction()" >No</button>
-							<button class="btn btn-primary  btn-signin" type="submit"  onclick="myFunction()" >Yes</button>
-						</span>
-						</div>
-					</div>
-				</div>
-		</div>
+						<!--<a href=""> <button class="btn btn-primary" type="submit" style="width: 10%;margin-left: 70%">Apply</button>-->
+                                <button class="btn btn-primary "  type="submit" style="width: 10%;margin-left: 70%">Apply</button>
+                            </form>
+                        </div>
+                </div>
 		</div>
 	</div>
 </body>

@@ -9,8 +9,10 @@ if(isset($_POST['update'])){
     $email=$_POST['email'];
     $firstName=$_POST['firstName'];
     $lastName=$_POST['lastName'];
+    $level=$_POST['level'];
 
-    $sql= "UPDATE users SET firstName='$firstName',lastName='$lastName',email='$email' WHERE Id='{$_SESSION['id']}'";
+
+    $sql= "UPDATE users SET firstName='$firstName',lastName='$lastName',email='$email',level='$level' WHERE Id='{$_SESSION['id']}'";
     $result = mysqli_query($conn, $sql);
     if(!$result )
     {
@@ -85,9 +87,16 @@ if(isset($_POST['update'])){
             <?php echo "<h1> {$_SESSION['firstName']} {$_SESSION['lastName']}'s Account</h1>"; ?>
             <br><br>
             <form method="POST" action="myAccount.php">
-                <input placeholder="First Name" value="<?php echo "{$_SESSION['firstName']}"?>" name="firstName" type="text"><br><br>
-                <input placeholder="Last Name" value="<?php echo "{$_SESSION['lastName']}"?>" name="lastName" type="text"><br><br>
-                <input placeholder="Email" value="<?php echo "{$_SESSION['email']}"?>" name="email" type="email"><br><br>
+                First Name: <input placeholder="First Name" value="<?php echo "{$_SESSION['firstName']}"?>" name="firstName" type="text"><br><br>
+                Last Name:  <input placeholder="Last Name" value="<?php echo "{$_SESSION['lastName']}"?>" name="lastName" type="text"><br><br>
+                Email :     <input placeholder="Email" value="<?php echo "{$_SESSION['email']}"?>" name="email" type="email"><br><br>
+                Level: <select name="level">
+                    <option value="level1">Level 1</option>
+                    <option value="level2">Level 2</option>
+                    <option value="level3">Level 3</option>
+                    <option value="Graduate">Graduate</option>
+                </select>
+                <br><br>
                 <button type="submit" name="update">Update Info</button>
             </form>
 

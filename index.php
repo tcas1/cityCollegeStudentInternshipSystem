@@ -3,7 +3,21 @@
 session_start();
 
 include 'dbh.php';
-?>
+
+
+
+$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$invalidEmail = "";
+
+//if error=empty is in the URL do this
+if (strpos($url, 'submitapp=success')!==false){
+    echo "Your Application was successfully uploaded";
+
+}
+elseif (strpos($url, 'internupload=success')!==false){
+    echo "Your Internship was successfully uploaded";
+
+}?>
 
 <html>
 <head>
@@ -83,7 +97,7 @@ include 'dbh.php';
             $result = mysqli_query($conn, $sql);
 
 
-            echo "<div class=\"Example\">"."<a href=\"Listingcreator.php\">Create an internship.</a></div> ";
+            echo "<div class=\"Example\">"."<a href=\"internshipform2.html\">Create an internship.</a></div> ";
 
             if(isset($_POST['reset'])){
                 while(!isset($_POST['submit']) && $row = mysqli_fetch_array($result))
@@ -127,7 +141,7 @@ include 'dbh.php';
 //$result=mysqli_query($conn,$sql);
 
                 if ($_POST['duration'] == '4months' && $_POST['internship_Level']=='level1') {
-                    $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%level 1%' ";
+                    $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%level%1%' ";
                     $result = mysqli_query($conn, $sql);
 
                     if(mysqli_num_rows($result) <= 0)
