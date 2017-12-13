@@ -67,7 +67,7 @@ elseif (strpos($url, 'internupload=success')!==false){
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 " style="border-right: solid; border-right-width: 2px; height: 1200px">
             <form action="index.php" method="POST">
                 <select name="internship_Level">
-                    <option value="null">Select Level...</option>
+                    <option value="select">Select Level...</option>
                     <option value="level1">Level 1</option>
                     <option value="level2">Level 2</option>
                     <option value="level3">Level 3</option>
@@ -75,7 +75,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 </select>
                 <br><br>
                 <select name="duration">
-                    <option value="">Select Duration...</option>
+                    <option value="select">Select Duration...</option>
                     <option value="4months">4 Months</option>
                     <option value="8months">8 Months</option>
                     <option value="12months">12 Months</option>
@@ -93,12 +93,14 @@ elseif (strpos($url, 'internupload=success')!==false){
             <?php
 
             $sql="SELECT * FROM internships";
-
+            $sql2="SELECT * FROM users";
+            $result2 = mysqli_query($conn, $sql2);
             $result = mysqli_query($conn, $sql);
+            $row2 = mysqli_fetch_array($result2);
 
-
-            echo "<div class=\"Example\">"."<a href=\"internshipform2.html\">Create an internship.</a></div> ";
-
+if($row2['isLecturer']==1) {
+    echo "<div class=\"Example\">" . "<a href=\"internshipform2.html\">Create an internship.</a></div> ";
+}
             if(isset($_POST['reset'])){
                 while(!isset($_POST['submit']) && $row = mysqli_fetch_array($result))
                 {
@@ -402,18 +404,170 @@ elseif (strpos($url, 'internupload=success')!==false){
                     }
                 }
 
-                elseif ($_POST['duration'] == '"null"'&& $_POST['internship_Level']=='"null"') {
+                elseif ($_POST['duration'] == 'select'&& $_POST['internship_Level']=='select') {
                     $sql = "SELECT * FROM internships";
                     $result = mysqli_query($conn, $sql);
                     while($row = mysqli_fetch_array($result))
                     {
-                        echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
-            <p>Open Positions: ".$row['open_Positions']."</p> 
-            "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p></div>";
+                        if ($row['CV'] == 1) {
+                            $msg = "Yes";
+                        } else {
+                            $msg = "No";
+                        }
 
+                        echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." 
+                        Level: ".$row['internship_Level']." <p>Open Positions: ".$row['open_Positions']."</p> "." Deadline: ".$row['datetime']."
+                        <br><p> Duration: ".$row['duration']." Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>
+                        View Job</a></div>";
                     };
 
 
+                }
+            }
+            elseif ($_POST['duration'] == '4months' && $_POST['internship_Level']=='select') {
+                $sql = "SELECT * FROM internships WHERE duration=4";
+                $result = mysqli_query($conn, $sql);
+
+                if(mysqli_num_rows($result) <= 0)
+                {
+                    echo "These are not the results you are looking for";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        if ($row['CV'] == 1) {
+                            $msg = "Yes";
+                        } else {
+                            $msg = "No";
+                        }
+                        echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
+            <p>Open Positions: " . $row['open_Positions'] . "</p> 
+            " . " Deadline: " . $row['datetime'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+
+                    };
+                }
+            }
+            elseif ($_POST['duration'] == '8months' && $_POST['internship_Level']=='select') {
+                $sql = "SELECT * FROM internships WHERE duration=8";
+                $result = mysqli_query($conn, $sql);
+
+                if(mysqli_num_rows($result) <= 0)
+                {
+                    echo "These are not the results you are looking for";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        if ($row['CV'] == 1) {
+                            $msg = "Yes";
+                        } else {
+                            $msg = "No";
+                        }
+                        echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
+            <p>Open Positions: " . $row['open_Positions'] . "</p> 
+            " . " Deadline: " . $row['datetime'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+
+                    };
+                }
+            }elseif ($_POST['duration'] == '12months' && $_POST['internship_Level']=='select') {
+                $sql = "SELECT * FROM internships WHERE duration=12";
+                $result = mysqli_query($conn, $sql);
+
+                if(mysqli_num_rows($result) <= 0)
+                {
+                    echo "These are not the results you are looking for";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        if ($row['CV'] == 1) {
+                            $msg = "Yes";
+                        } else {
+                            $msg = "No";
+                        }
+                        echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
+            <p>Open Positions: " . $row['open_Positions'] . "</p> 
+            " . " Deadline: " . $row['datetime'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+
+                    };
+                }
+            }
+
+            elseif ($_POST['duration'] == 'select' && $_POST['internship_Level']=='level1') {
+                $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level 1%'";
+                $result = mysqli_query($conn, $sql);
+
+                if(mysqli_num_rows($result) <= 0)
+                {
+                    echo "These are not the results you are looking for";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        if ($row['CV'] == 1) {
+                            $msg = "Yes";
+                        } else {
+                            $msg = "No";
+                        }
+                        echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
+                  <p>Open Positions: " . $row['open_Positions'] . "</p> 
+                  " . " Deadline: " . $row['datetime'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                    }
+                }
+            }
+
+            elseif ($_POST['duration'] == 'select' && $_POST['internship_Level']=='level2') {
+                $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level 2%'";
+                $result = mysqli_query($conn, $sql);
+
+                if(mysqli_num_rows($result) <= 0)
+                {
+                    echo "These are not the results you are looking for";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        if ($row['CV'] == 1) {
+                            $msg = "Yes";
+                        } else {
+                            $msg = "No";
+                        }
+                        echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
+                  <p>Open Positions: " . $row['open_Positions'] . "</p> 
+                  " . " Deadline: " . $row['datetime'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                    }
+                }
+            }
+
+            elseif ($_POST['duration'] == 'select' && $_POST['internship_Level']=='level3') {
+                $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level 3%'";
+                $result = mysqli_query($conn, $sql);
+
+                if(mysqli_num_rows($result) <= 0)
+                {
+                    echo "These are not the results you are looking for";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        if ($row['CV'] == 1) {
+                            $msg = "Yes";
+                        } else {
+                            $msg = "No";
+                        }
+                        echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
+                  <p>Open Positions: " . $row['open_Positions'] . "</p> 
+                  " . " Deadline: " . $row['datetime'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                    }
+                }
+            }
+
+            elseif ($_POST['duration'] == 'select' && $_POST['internship_Level']=='Graduate') {
+                $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%Graduate%'";
+                $result = mysqli_query($conn, $sql);
+
+                if(mysqli_num_rows($result) <= 0)
+                {
+                    echo "These are not the results you are looking for";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        if ($row['CV'] == 1) {
+                            $msg = "Yes";
+                        } else {
+                            $msg = "No";
+                        }
+                        echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
+                  <p>Open Positions: " . $row['open_Positions'] . "</p> 
+                  " . " Deadline: " . $row['datetime'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                    }
                 }
             }
             ?>

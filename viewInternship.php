@@ -63,9 +63,10 @@ include 'dbh.php';
 							<!--Internship description-->
 							<?php
             				$sql="SELECT * FROM internships WHERE internship_Id='".$_GET['id']."'";
-
+                            $sql2="SELECT * FROM users";
+                            $result2 = mysqli_query($conn, $sql2);
             				$result = mysqli_query($conn, $sql);
-
+                            $row2 = mysqli_fetch_array($result2);
 
             				while($row = mysqli_fetch_array($result))
             					{
@@ -85,7 +86,11 @@ include 'dbh.php';
 						<br>
 						<a href="index.php"><button class="btn btn-primary" type="reset" style="width: 10%;margin-left: 8%">Back</button>
 						<a href="./directory/yourfile.pdf" download="intership"> <button class="btn btn-primary" type="submit" style="width: 15%;margin-left: 40%">Download PDF</button>
-                            <?php echo "<a href='submitApplication.php?id=".$_GET['id']."'> <button class=\"btn btn-primary\" type=\"submit\" style=\"width: 10%;margin-left: 8%\">Apply</a>";?>
+                        <?php
+                            if ($row['isLecturer'==0]) {
+                                echo "<a href='submitApplication.php?id=" . $_GET['id'] . "'> <button class=\"btn btn-primary\" type=\"submit\" style=\"width: 10%;margin-left: 8%\">Apply</a>";
+                            }
+                        ?>
 					</div>
 				</div>
 		</div>

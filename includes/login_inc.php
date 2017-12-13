@@ -24,11 +24,17 @@ else{
     $_SESSION['lastName'] = $row['lastName'];
     $_SESSION['level'] = $row['level'];
 
+}
+if ($row['isLecturer']==1){
+    /* landing page once user logs in*/
+    header("Location: ../myCurrentListings.php");
+    die;
+}
 
+else {
     /* landing page once user logs in*/
     header("Location: ../index.php");
-
-
+    die;
 }
 
 //THEO

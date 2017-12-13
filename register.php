@@ -3,6 +3,8 @@ include 'dbh.php';
 
 $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 $invalidEmail = "";
+$invalidCode = "";
+
 
 //if error=empty is in the URL do this
 if (strpos($url, 'error=empty')!==false){
@@ -16,6 +18,9 @@ elseif (strpos($url, 'error=email')!==false){
 
 elseif (strpos($url, 'error=invalidemail')!==false){
     $invalidEmail = "You must register with a City College email";
+}
+elseif (strpos($url, 'error=invalidemail')!==false){
+    $invalidCode = "You code is incorrect";
 }
 
 elseif (strpos($url, 'signup=success')!==false){
@@ -114,6 +119,12 @@ elseif (strpos($url, 'signup=success')!==false){
                 <label for="inputEmail" style="display: inline-block; width: 48%; text-align: center;"> password:</label>
                 <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required style="display: inline-block; width: 50%">
                 <br><br>
+
+                <label for="inputEmail" style="display: inline-block; width: 48%; text-align: center;"> Lecturer Code (Leave blank if you are not a Lecturer):</label>
+                <span class="error"><?php echo $invalidCode;?></span>
+                <input name="secretcode" type="text"  class="form-control" placeholder="" required style="display: inline-block; width: 50%">
+                <br><br>
+
                 <div align="center">
                     <button class="btn btn-primary btn-block btn-signin" type="submit" style="width: 60%;margin-left: 8%">Sign up</button>
                     <a href="landingPage.php">login</a>

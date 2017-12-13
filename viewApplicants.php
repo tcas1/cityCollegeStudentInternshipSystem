@@ -74,7 +74,7 @@ include 'dbh.php';
 //                }
 
                 echo "<div class=\"Listing\">"."First Name: ".$row['firstName']."<p>Last Name: ".$row['lastName']."</p><br>"." email: ".$row['email']."
-                    </div>";
+                    <p>Level: ".$row['level']."</p></div>";
 
             }
             ?>

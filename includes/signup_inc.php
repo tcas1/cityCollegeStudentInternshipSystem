@@ -7,6 +7,8 @@ $firstName=$_POST['firstName'];
 $lastName=$_POST['lastName'];
 $password=$_POST['password'];
 $email=$_POST['email'];
+$secretcode=$_POST['secretcode'];
+
 
 //check if any of the fields are empty
 if(empty($firstName) || empty($lastName) || empty($password) || empty($email)){
@@ -34,10 +36,21 @@ else {
 
     else{
     //filter_var($email, FILTER_VALIDATE_EMAIL);
-    $sql = "INSERT INTO users (firstName,lastName,password,email) VALUES ('$firstName','$lastName','$password','$email')";
-    $result = mysqli_query($conn, $sql);
-        header("Location: ../landingPage.php?signup=success");
+        $sql2 = "SELECT * FROM admincode";
+        $result2 = mysqli_query($conn, $sql2);
 
+
+        if($row=mysqli_fetch_assoc($result2))
+        {
+            $sql= "INSERT INTO users (firstName,lastName,password,email,isLecturer) VALUES ('$firstName','$lastName','$password','$email','1')";
+            $result = mysqli_query($conn, $sql);
+            header("Location: ../landingPage.php?signup=success");
+        }
+        else {
+            $sql = "INSERT INTO users (firstName,lastName,password,email) VALUES ('$firstName','$lastName','$password','$email')";
+            $result = mysqli_query($conn, $sql);
+            header("Location: ../landingPage.php?signup=success");
+        }
     }
 }
 

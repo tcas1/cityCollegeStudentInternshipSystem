@@ -14,6 +14,7 @@ if(isset($_POST['update'])){
 
     $sql= "UPDATE users SET firstName='$firstName',lastName='$lastName',email='$email',level='$level' WHERE Id='{$_SESSION['id']}'";
     $result = mysqli_query($conn, $sql);
+
     if(!$result )
     {
         echo "Could not update data:";
@@ -77,6 +78,7 @@ if(isset($_POST['update'])){
             <nav>
                 <ul>
                     <li><a href="myAccount.php">My Account</a> </li>
+                    <li><a href="lecturer.php">lecturer view</a> </li>
                     <li><a href="myCurrentListings.php">My Current Internships</a> </li>
                     <li><a href="myPastListings.php">My Past Internships</a></li>
                 </ul>
@@ -90,12 +92,21 @@ if(isset($_POST['update'])){
                 First Name: <input placeholder="First Name" value="<?php echo "{$_SESSION['firstName']}"?>" name="firstName" type="text"><br><br>
                 Last Name:  <input placeholder="Last Name" value="<?php echo "{$_SESSION['lastName']}"?>" name="lastName" type="text"><br><br>
                 Email :     <input placeholder="Email" value="<?php echo "{$_SESSION['email']}"?>" name="email" type="email"><br><br>
-                Level: <select name="level">
-                    <option value="level1">Level 1</option>
-                    <option value="level2">Level 2</option>
-                    <option value="level3">Level 3</option>
-                    <option value="Graduate">Graduate</option>
-                </select>
+                <?php
+                $sql2="SELECT * FROM users";
+                $result2 = mysqli_query($conn, $sql2);
+                $row2 = mysqli_fetch_array($result2);
+
+
+                if($row2['isLecturer']==0) {
+                    echo "Level: <select name=\"level\">\n";
+                    echo "<option value=\"Level 1\">Level 1</option>\n";
+                    echo "<option value=\"Level 2\">Level 2</option>\n";
+                    echo "<option value=\"Level 3\">Level 3</option>\n";
+                    echo "<option value=\"Graduate\">Graduate</option>\n";
+                    echo " </select>";
+                }
+                ?>
                 <br><br>
                 <button type="submit" name="update">Update Info</button>
             </form>

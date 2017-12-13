@@ -75,9 +75,9 @@ include 'dbh.php';
 					<div>
 						Level:
         						<select name="level">
-                                    <option value="level1">Level 1</option>
-                                    <option value="level2">Level 2</option>
-                                    <option value="level3">Level 3</option>
+                                    <option value="Level 1">Level 1</option>
+                                    <option value="Level 2">Level 2</option>
+                                    <option value="Level 3">Level 3</option>
                                     <option value="Graduate">Graduate</option>
         						</select>
 
