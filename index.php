@@ -423,7 +423,7 @@ if($row2['isLecturer']==1) {
 
 
                 }
-            }
+
             elseif ($_POST['duration'] == '4months' && $_POST['internship_Level']=='select') {
                 $sql = "SELECT * FROM internships WHERE duration=4";
                 $result = mysqli_query($conn, $sql);
@@ -569,6 +569,7 @@ if($row2['isLecturer']==1) {
                   " . " Deadline: " . $row['datetime'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
                     }
                 }
+            }
             }
             ?>
         </div>
