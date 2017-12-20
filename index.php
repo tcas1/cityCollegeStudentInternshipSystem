@@ -98,7 +98,7 @@ elseif (strpos($url, 'internupload=success')!==false){
             $result = mysqli_query($conn, $sql);
             $row2 = mysqli_fetch_array($result2);
 
-if($row2['isLecturer']==1) {
+if(isset($_SESSION['lecturer'])) {
     echo "<div class=\"Example\">" . "<a href=\"internshipform2.html\">Create an internship.</a></div> ";
 }
             if(isset($_POST['reset'])){

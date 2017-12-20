@@ -36,9 +36,8 @@ else {
 
     else{
     //filter_var($email, FILTER_VALIDATE_EMAIL);
-        $sql2 = "SELECT * FROM admincode";
+        $sql2 = "SELECT * FROM admincode WHERE secretcode='$secretcode'";
         $result2 = mysqli_query($conn, $sql2);
-
 
         if($row=mysqli_fetch_assoc($result2))
         {
@@ -47,7 +46,7 @@ else {
             header("Location: ../landingPage.php?signup=success");
         }
         else {
-            $sql = "INSERT INTO users (firstName,lastName,password,email) VALUES ('$firstName','$lastName','$password','$email')";
+            $sql = "INSERT INTO users (firstName,lastName,password,email,isLecturer) VALUES ('$firstName','$lastName','$password','$email', '0')";
             $result = mysqli_query($conn, $sql);
             header("Location: ../landingPage.php?signup=success");
         }

@@ -25,8 +25,6 @@ if(isset($_POST['update'])){
     }
 
 }
-
-
 ?>
 
 <html>
@@ -77,16 +75,19 @@ if(isset($_POST['update'])){
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 " style="border-right: solid; border-right-width: 2px; height: 1200px">
             <nav>
                 <ul>
-                    <li><a href="myAccount.php">My Account</a> </li>
-                    <li><a href="lecturer.php">lecturer view</a> </li>
-                    <li><a href="myCurrentListings.php">My Current Internships</a> </li>
-                    <li><a href="myPastListings.php">My Past Internships</a></li>
+                   <?php if(isset($_SESSION['lecturer'])) {
+                       echo "<li><a href=\"myAccount.php\">My Account</a> </li>";
+                       echo "<li><a href=\"lecturer.php\">lecturer view</a> </li>\n";
+                       echo " <li><a href=\"myCurrentListings.php\">My Current Internships</a> </li>";
+                       echo "<li><a href=\"myPastListings.php\">My Past Internships</a></li>";
+                    }
+                    ?>
                 </ul>
             </nav>
         </div>
         <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <!--Internships-->
-            <?php echo "<h1> {$_SESSION['firstName']} {$_SESSION['lastName']}'s Account</h1>"; ?>
+            <?php echo "<h1> {$_SESSION['firstName']}{$_SESSION['lastName']}'s Account</h1>"; ?>
             <br><br>
             <form method="POST" action="myAccount.php">
                 First Name: <input placeholder="First Name" value="<?php echo "{$_SESSION['firstName']}"?>" name="firstName" type="text"><br><br>
@@ -98,7 +99,8 @@ if(isset($_POST['update'])){
                 $row2 = mysqli_fetch_array($result2);
 
 
-                if($row2['isLecturer']==0) {
+                if(isset($_SESSION['student'])) {
+
                     echo "Level: <select name=\"level\">\n";
                     echo "<option value=\"Level 1\">Level 1</option>\n";
                     echo "<option value=\"Level 2\">Level 2</option>\n";
@@ -110,10 +112,6 @@ if(isset($_POST['update'])){
                 <br><br>
                 <button type="submit" name="update">Update Info</button>
             </form>
-
-
-
-
         </div>
     </div>
 

@@ -28,12 +28,14 @@ else{
 if ($row['isLecturer']==1){
     /* landing page once user logs in*/
     header("Location: ../myCurrentListings.php");
+    $_SESSION['lecturer']="lect";
     die;
 }
 
 else {
     /* landing page once user logs in*/
     header("Location: ../index.php");
+    $_SESSION['student']="student";
     die;
 }
 

@@ -124,7 +124,7 @@ elseif (strpos($url, 'signup=success')!==false){
 
                 <label for="inputEmail" style="display: inline-block; width: 48%; text-align: center;"> Lecturer Code (Leave blank if you are not a Lecturer):</label>
                 <span class="error"><?php echo $invalidCode;?></span>
-                <input name="secretcode" type="text"  class="form-control" placeholder="" required style="display: inline-block; width: 50%">
+                <input name="secretcode" type="text"  class="form-control" placeholder=""  style="display: inline-block; width: 50%">
                 <br><br>
 
                 <div align="center">
