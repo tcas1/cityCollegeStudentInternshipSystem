@@ -55,7 +55,7 @@ include 'dbh.php';
                 <ul>
                     <li><a href="myAccount.php">My Account</a> </li>
                     <li><a href="myCurrentListings.php">My Current Internships</a> </li>
-                    <li><a href="myPastListings.php">My Past Internships</a></li>
+                    <li><a href="myPastListings.php">My Archived Internships</a></li>
                 </ul>
             </nav>
         </div>
@@ -66,7 +66,7 @@ include 'dbh.php';
             <br>
             <?php
 
-            $sql="SELECT * FROM internships WHERE datetime < CURRENT_DATE AND poster_Id='{$_SESSION['id']}' ";
+            $sql="SELECT * FROM internships WHERE isarchived=1 AND poster_Id='{$_SESSION['id']}' ";
 
             $result = mysqli_query($conn, $sql);
             if (!$result) {

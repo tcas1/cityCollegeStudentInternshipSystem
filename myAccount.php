@@ -79,7 +79,7 @@ if(isset($_POST['update'])){
                        echo "<li><a href=\"myAccount.php\">My Account</a> </li>";
                        echo "<li><a href=\"lecturer.php\">lecturer view</a> </li>\n";
                        echo " <li><a href=\"myCurrentListings.php\">My Current Internships</a> </li>";
-                       echo "<li><a href=\"myPastListings.php\">My Past Internships</a></li>";
+                       echo "<li><a href=\"myPastListings.php\">My Archived Internships</a></li>";
                     }
                     ?>
                 </ul>
@@ -87,7 +87,7 @@ if(isset($_POST['update'])){
         </div>
         <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <!--Internships-->
-            <?php echo "<h1> {$_SESSION['firstName']}{$_SESSION['lastName']}'s Account</h1>"; ?>
+            <?php echo "<h1> {$_SESSION['firstName']} {$_SESSION['lastName']}'s Account</h1>"; ?>
             <br><br>
             <form method="POST" action="myAccount.php">
                 First Name: <input placeholder="First Name" value="<?php echo "{$_SESSION['firstName']}"?>" name="firstName" type="text"><br><br>

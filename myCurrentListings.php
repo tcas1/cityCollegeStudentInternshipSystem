@@ -3,7 +3,14 @@
 session_start();
 
 include 'dbh.php';
+$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+if (strpos($url, 'archive=success')!==false){
+    echo "Your Internship has been successfully archive. You can now find it in the Archive Listing Tab";
+}
 ?>
+
+
 
 <html>
 <head>
@@ -55,7 +62,7 @@ include 'dbh.php';
                 <ul>
                     <li><a href="myAccount.php">My Account</a> </li>
                     <li><a href="myCurrentListings.php">My Current Internships</a> </li>
-                    <li><a href="myPastListings.php">My Past Internships</a></li>
+                    <li><a href="myPastListings.php">My Archived Internships</a></li>
                 </ul>
             </nav>
         </div>
@@ -66,23 +73,19 @@ include 'dbh.php';
             <br>
             <?php
 
-            $sql="SELECT * FROM internships WHERE datetime > CURRENT_DATE AND poster_Id='{$_SESSION['id']}' ";
+            $sql="SELECT * FROM internships WHERE isarchived=0 AND poster_Id='{$_SESSION['id']}' ";
             $sql2="SELECT * FROM users";
             $result2 = mysqli_query($conn, $sql2);
             $result = mysqli_query($conn, $sql);
             $row2 = mysqli_fetch_array($result2);
 
-//         used for error checking
-//         if (!$result) {
-//                printf("Error: %s\n", mysqli_error($conn));
-//                exit();
-//            }
-
         if($row2['isLecturer']==1) {
             echo "<div class=\"Example\">" . "<a href=\"Listingcreator.php\">Create an internship.</a></div> ";
         }
             while($row = mysqli_fetch_array($result))
+
             {
+
                 if($row['CV']==1) {
                     $msg = "Yes";
                 }
@@ -92,18 +95,20 @@ include 'dbh.php';
 
                 if($row2['isLecturer']==1) {
                    $appview = "<a href='viewApplicants.php?id=".$row['internship_Id']."'>View Applicants</a>";
+                    $arch= "<a href='arch.php?id=".$row['internship_Id']."'>Archive</a>";
                 }
                 else{
                     $appview="";
+                    $arch= "";
                 }
-
 
                 echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
     <p>Open Positions: ".$row['open_Positions']."</p> 
-    "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg $appview</div>";
+    "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg $appview <br>$arch</div>";
 
             }
             ?>
+
         </div>
     </div>
 

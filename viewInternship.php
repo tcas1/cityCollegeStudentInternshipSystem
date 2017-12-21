@@ -87,7 +87,7 @@ include 'dbh.php';
 						<a href="index.php"><button class="btn btn-primary" type="reset" style="width: 10%;margin-left: 8%">Back</button>
                             <a href="createPdf.php/?id=<?php echo $_GET['id'] ?>" target="_blank" > <button class="btn btn-primary" type="submit" style="width: 15%;margin-left: 40%">Download PDF</button>
                         <?php
-                            if ($row['isLecturer'==0]) {
+                        if(isset($_SESSION['student'])) {
                                 echo "<a href='submitApplication.php?id=" . $_GET['id'] . "'> <button class=\"btn btn-primary\" type=\"submit\" style=\"width: 10%;margin-left: 8%\">Apply</a>";
                             }
                         ?>
