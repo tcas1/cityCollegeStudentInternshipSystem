@@ -80,7 +80,7 @@ if (strpos($url, 'archive=success')!==false){
             $row2 = mysqli_fetch_array($result2);
 
         if($row2['isLecturer']==1) {
-            echo "<div class=\"Example\">" . "<a href=\"Listingcreator.php\">Create an internship.</a></div> ";
+            echo "<div class=\"Example\">" . "<a href=\"internshipform2.html\">Create an internship.</a></div> ";
         }
             while($row = mysqli_fetch_array($result))
 
@@ -96,6 +96,8 @@ if (strpos($url, 'archive=success')!==false){
                 if($row2['isLecturer']==1) {
                    $appview = "<a href='viewApplicants.php?id=".$row['internship_Id']."'>View Applicants</a>";
                     $arch= "<a href='arch.php?id=".$row['internship_Id']."'>Archive</a>";
+                    $edit = "<a href='edit.php?id=".$row['internship_Id']."'>Edit</a>";
+
                 }
                 else{
                     $appview="";
@@ -104,7 +106,7 @@ if (strpos($url, 'archive=success')!==false){
 
                 echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
     <p>Open Positions: ".$row['open_Positions']."</p> 
-    "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg $appview <br>$arch</div>";
+    "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg $appview <br>$arch $edit</div>";
 
             }
             ?>
