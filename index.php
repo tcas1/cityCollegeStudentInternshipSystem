@@ -101,7 +101,7 @@ elseif (strpos($url, 'internupload=success')!==false){
 if(isset($_SESSION['lecturer'])) {
     echo "<div class=\"Example\">" . "<a href=\"internshipform2.html\">Create an internship.</a></div> ";
 }
-            if(isset($_POST['reset'])){
+    if(isset($_POST['reset'])){
                 while(!isset($_POST['submit']) && $row = mysqli_fetch_array($result))
                 {
                     if($row['CV']==1) {
@@ -110,8 +110,19 @@ if(isset($_SESSION['lecturer'])) {
                     else {
                         $msg = "No";
                     }
+                    //SHORTEN DESCRIPTION
+                        $desc=$row['description'];
+                        if(strlen($desc)<=100){
+                            $shrdesc= $desc;
+                        }
+                        else{
+                            $short_desc=substr($desc,0,100) . '...';
+                            $shrdesc=$short_desc;
+                        }
 
-                    echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']."
+
+
+                    echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: $shrdesc </p><br>"." Level: ".$row['internship_Level']."
 						<p>Open Positions: ".$row['open_Positions']."</p>
 						"." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
 
