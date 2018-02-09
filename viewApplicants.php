@@ -60,16 +60,6 @@ include 'dbh.php';
             </nav>
         </div>
         <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
-
-            <?php
-            $sql="SELECT title FROM internships WHERE internship_Id='".$_GET['id']."'";
-
-            $result = mysqli_query($conn, $sql);
-            while($row = mysqli_fetch_array($result))
-            {
-                echo "<h3>{$row['title']}</h3>";
-            }
-            ?>
             <?php
             $sql="SELECT * FROM applications WHERE internship_Id='".$_GET['id']."'";
                 $result = mysqli_query($conn, $sql);
@@ -82,15 +72,13 @@ include 'dbh.php';
 //                else {
 //                $msg = "No";
 //                }
-                 $gencert= "<a href='gencert.php?id=".$row['internship_Id']."&fn=".$row['firstName']."&ln=".$row['lastName']."'>genCert</a>";
 
                 echo "<div class=\"Listing\">"."First Name: ".$row['firstName']."<p>Last Name: ".$row['lastName']."</p><br>"." email: ".$row['email']."
-                    <p>Level: ".$row['level']."</p>$gencert</div>";
+                    <p>Level: ".$row['level']."</p></div>";
 
             }
             ?>
         </div>
-
     </div>
 
 </div>

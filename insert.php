@@ -9,10 +9,10 @@
                die('Could not connect: ' . mysqli_error());
             }
 
-			$title = $_POST['title'];
-			$description = $_POST['description'];
-            $duration = $_POST['duration'];
-			$open_Positions = $_POST['open_Positions'];
+			$title = mysqli_real_escape_string($conn,$_POST['title']);
+			$description = mysqli_real_escape_string($conn, $_POST['description']);
+            $duration = mysqli_real_escape_string($conn, $_POST['duration']);
+			$open_Positions = mysqli_real_escape_string($conn, $_POST['open_Positions']);
 			$CV = $_POST['CV'];
 			$datetime = $_POST['datetime'];
 

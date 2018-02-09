@@ -13,9 +13,10 @@ div.vertical-line{
 div.Listing {
     background-color: #ededed;
     color: #000000;
-    width: 60%;
-    padding: 63px 15px;
+    width: 95%;
+    padding: 10px 15px;
     text-align: left;
+    margin-bottom: 5px;
     border-width:0.2px;
     border-style:solid;
 }
@@ -23,9 +24,10 @@ div.Example {
     background-color: #ededed;
     color: #000000;
     opacity: 0.7;
-    width: 60%;
-    padding: 63px 15px;
+    width: 95%;
+    padding: 10px 15px;
     text-align: left;
+    margin-bottom: 5px;
     border-width:2px;
     border-style:dashed dashed solid dashed;
 }

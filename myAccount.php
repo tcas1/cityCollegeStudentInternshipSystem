@@ -116,8 +116,5 @@ if(isset($_POST['update'])){
     </div>
 
 </div>
-
-<br><br>
-
 </body>
 </html>

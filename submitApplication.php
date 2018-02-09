@@ -105,7 +105,21 @@ include 'dbh.php';
                             <?php echo "<a href='viewInternship.php?id=".$_GET['id']."'> <button class=\"btn btn-primary\" type=\"reset\" style=\"width: 10%;margin-left: 8%\">Back</a>";?>
 
 						<!--<a href=""> <button class="btn btn-primary" type="submit" style="width: 10%;margin-left: 70%">Apply</button>-->
-                                <button class="btn btn-primary " name="Submit" type="submit" style="width: 10%;margin-left: 70%">Apply</button>
+                               <?php $sql="SELECT email FROM applications WHERE email='$email'";
+
+                                $result = mysqli_query($conn, $sql);
+
+                                $emailcheck=mysqli_num_rows($result);
+
+                                if($emailcheck>0){
+                                echo "";
+                                exit();
+                                }
+                                else{
+                                    echo "<button class=\"btn btn-primary \" name=\"Submit\" type=\"submit\" style=\"width: 10%;margin-left: 70%\">Apply</button>";
+                                }
+                                ?>
+
                             </form>
                         </div>
                 </div>

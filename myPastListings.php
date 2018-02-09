@@ -75,7 +75,7 @@ include 'dbh.php';
                 exit();
             }
 
-            echo "<div class=\"Example\">"."<a href=\"internshipform2.html\">Create an internship.</a></div> ";
+            echo "<div class=\"Example\">"."<a href=\"Listingcreator.php\">Create an internship.</a></div> ";
 
             while($row = mysqli_fetch_array($result))
             {
