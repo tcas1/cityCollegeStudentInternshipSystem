@@ -68,6 +68,8 @@ include 'dbh.php';
                     $result = mysqli_query($conn, $sql);
                     $row2 = mysqli_fetch_array($result2);
                     $row = mysqli_fetch_array($result);
+
+//                    $time=date('d') ."th ". date('F  Y');
 //                    while($row = mysqli_fetch_array($result))
 //                    {
 //                        if($row['CV']==1) {
@@ -100,8 +102,8 @@ include 'dbh.php';
 
                     <br>
                     <a href="index.php"><button class="btn btn-primary" type="reset" style="width: 10%;margin-left: 8%">Back</button>
-                        <a href="createPdf.php/?id=<?php echo $_GET['id'] ?>" target="_blank" >
-                            <button class="btn btn-primary" type="submit" style="width: 15%;margin-left: 40%">Download PDF</button>
+                        <a href="createCertPdf.php/?id=<?php echo $_GET['id']?>&fn=<?php echo $_GET['fn']?>&ln=<?php echo $_GET['ln']?> " target="_blank" >
+                        <button class="btn btn-primary" type="submit" style="width: 15%;margin-left: 40%">Download PDF</button>
 
 
                 </div>

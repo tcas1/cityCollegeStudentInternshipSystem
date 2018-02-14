@@ -22,7 +22,18 @@ include 'dbh.php';
 </head>
 <body>
 <div class="container-fluid">
-    <div class = "row" >
+    <div class = "row" style="
+     background-color: skyblue;
+     border-top-color: initial;
+     border-top-style: solid;
+     border-top-width: initial;
+     border-right-color: initial;
+     border-right-style: solid;
+     border-right-width: initial;
+     border-left-color: initial;
+     border-left-style: solid;
+     border-left-width: initial;">
+
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <img src="images/logo_city.png" >
         </div>
@@ -48,18 +59,31 @@ include 'dbh.php';
 
     </div>
     <hr>
-    <div class = "row">
+    <div class = "row" style="border: solid">
 
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 " style="border-right: solid; border-right-width: 2px; height: 1200px">
-            <nav>
-                <ul>
-                    <li><a href="myAccount.php">My Account</a> </li>
-                    <li><a href="myCurrentListings.php">My Current Internships</a> </li>
-                    <li><a href="myPastListings.php">My Past Internships</a></li>
+            <nav class="nav-sidebar">
+                <ul class="nav">
+                    <h3>Menu</h3>
+                    <li><a href="myAccount.php">My Account</a></li>
+                    <li><a href="myCurrentListings.php">My Current Internships</a></li>
+                    <li><a href="myPastListings.php">My Archived Internships</a></li>
+                    <li class="nav-divider"></li>
                 </ul>
             </nav>
         </div>
+
         <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
+
+            <?php
+            $sql="SELECT title FROM internships WHERE internship_Id='".$_GET['id']."'";
+
+            $result = mysqli_query($conn, $sql);
+            while($row = mysqli_fetch_array($result))
+            {
+                echo "<h3>{$row['title']}</h3>";
+            }
+            ?>
             <?php
             $sql="SELECT * FROM applications WHERE internship_Id='".$_GET['id']."'";
                 $result = mysqli_query($conn, $sql);
@@ -72,13 +96,15 @@ include 'dbh.php';
 //                else {
 //                $msg = "No";
 //                }
+                 $gencert= "<a href='createCertPdf.php?id=".$row['internship_Id']."&fn=".$row['firstName']."&ln=".$row['lastName']."'>Generate Certificate</a>";
 
                 echo "<div class=\"Listing\">"."First Name: ".$row['firstName']."<p>Last Name: ".$row['lastName']."</p><br>"." email: ".$row['email']."
-                    <p>Level: ".$row['level']."</p></div>";
+                    <p>Level: ".$row['level']."</p>$gencert</div>";
 
             }
             ?>
         </div>
+
     </div>
 
 </div>

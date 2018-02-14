@@ -17,7 +17,18 @@ include 'dbh.php';
 </head>
 <body>
 	<div class="container-fluid">
-		<div class = "row" >
+		<div class = "row" style="
+     background-color: skyblue;
+     border-top-color: initial;
+     border-top-style: solid;
+     border-top-width: initial;
+     border-right-color: initial;
+     border-right-style: solid;
+     border-right-width: initial;
+     border-left-color: initial;
+     border-left-style: solid;
+     border-left-width: initial;">
+
 			<div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3">
 				<img src="images/logo_city.png" >
 			</div>
@@ -28,7 +39,7 @@ include 'dbh.php';
 					style="display: inline-block; width: 80%;border-radius:20px">
 				</form>
 			</div>
-			<div class = "col-xs-3 col-sm-3 col-md-5 col-lg-3">
+			<div class = "col-xs-3 col-sm-3 col-md-5 col-lg-3" style="width: auto">
 				<br><br><br>
 				<ul class = "nav navbar-nav">
                     <a href="index.php" class="btn-primary btn-lg"> Home</a>
@@ -37,8 +48,7 @@ include 'dbh.php';
 				</ul>
 			</div>
 		</div>
-		<hr>
-		<div class = "row">
+		<div class = "row" style="border: solid">
 
 		<div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
 				<div class="panel panel-info">

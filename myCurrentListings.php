@@ -29,7 +29,19 @@ if (strpos($url, 'archive=success')!==false){
 </head>
 <body>
 <div class="container-fluid">
-    <div class = "row" >
+
+    <div class = "row" style="
+     background-color: skyblue;
+     border-top-color: initial;
+     border-top-style: solid;
+     border-top-width: initial;
+     border-right-color: initial;
+     border-right-style: solid;
+     border-right-width: initial;
+     border-left-color: initial;
+     border-left-style: solid;
+     border-left-width: initial;" >
+
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <img src="images/logo_city.png" >
         </div>
@@ -54,17 +66,21 @@ if (strpos($url, 'archive=success')!==false){
 
 
     </div>
-    <hr>
-    <div class = "row">
+    <div class = "row" style="border: solid">
 
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 " style="border-right: solid; border-right-width: 2px; height: 1200px">
-            <nav>
-                <ul>
-                    <li><a href="myAccount.php">My Account</a> </li>
-                    <li><a href="myCurrentListings.php">My Current Internships</a> </li>
+
+
+            <nav class="nav-sidebar">
+                <ul class="nav">
+                    <h3>Menu</h3>
+                    <li><a href="myAccount.php">My Account</a></li>
+                    <li><a href="myCurrentListings.php">My Current Internships</a></li>
                     <li><a href="myPastListings.php">My Archived Internships</a></li>
+                    <li class="nav-divider"></li>
                 </ul>
             </nav>
+
         </div>
         <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <!--                    Internships-->
@@ -72,39 +88,71 @@ if (strpos($url, 'archive=success')!==false){
 
             <br>
             <?php
-
+            $results_per_page = 10;
             $sql="SELECT * FROM internships WHERE isarchived=0 AND poster_Id='{$_SESSION['id']}' ";
-            $sql2="SELECT * FROM users";
-            $result2 = mysqli_query($conn, $sql2);
+            //$sql2="SELECT * FROM users";
+            //$result2 = mysqli_query($conn, $sql2);
             $result = mysqli_query($conn, $sql);
-            $row2 = mysqli_fetch_array($result2);
+            //$row2 = mysqli_fetch_array($result2);
+            $number_of_results = mysqli_num_rows($result);
+            $number_of_pages = ceil($number_of_results/$results_per_page);
 
-        if($row2['isLecturer']==1) {
-            echo "<div class=\"Example\">" . "<a href=\"Listingcreator.php\">Create an internship.</a></div> ";
+            if (!isset($_GET['page'])) {
+                $page = 1;
+            } else {
+                $page = $_GET['page'];
+            }
+
+            $this_page_first_result = ($page-1)*$results_per_page;
+            $sql="SELECT * FROM internships WHERE isarchived=0 AND poster_Id='{$_SESSION['id']}' LIMIT $this_page_first_result ,  $results_per_page";
+            $result = mysqli_query($conn, $sql);
+
+
+
+        if(isset($_SESSION['lecturer'])) {
+            echo "<div class=\"panel panel-info\">";
+            echo " <div class=\"panel-heading\">";
+            echo "<h3>Create an Internship</h3>";
+            echo "<a href=\"internshipform2.html\"><button class=\"btn btn-primary\" type=\"submit\" style=\"width: 15%;margin-left: 80%\">Create</button></a>\n";
+            echo " </div>";
+            echo " </div>";
         }
-            while($row = mysqli_fetch_array($result))
 
+            if(mysqli_num_rows($result) <= 0)
             {
+                echo "You currently do not have any internships listed";
+            }
 
-                if($row['CV']==1) {
-                    $msg = "Yes";
-                }
-                else {
-                    $msg = "No";
-                }
+            else {
+                while ($row = mysqli_fetch_array($result)) {
 
-                if($row2['isLecturer']==1) {
-                   $appview = "<a href='viewApplicants.php?id=".$row['internship_Id']."'>View Applicants</a>";
-                    $arch= "<a href='arch.php?id=".$row['internship_Id']."'>Archive</a>";
-                }
-                else{
-                    $appview="";
-                    $arch= "";
-                }
+                    if ($row['CV'] == 1) {
+                        $msg = "Yes";
+                    } else {
+                        $msg = "No";
+                    }
 
-                echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
-    <p>Open Positions: ".$row['open_Positions']."</p> 
-    "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg $appview <br>$arch</div>";
+                    if ($_SESSION['lecturer']) {
+                        $appview = "<a href='viewApplicants.php?id=" . $row['internship_Id'] . "'>View Applicants</a>";
+                        $arch = "<a href='arch.php?id=" . $row['internship_Id'] . "'>Archive</a>";
+                        $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "'>Edit</a>";
+                        $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "'>Delete</a>";
+
+                    } else {
+                        $appview = "";
+                        $arch = "";
+                    }
+
+                    echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
+    <p>Open Positions: " . $row['open_Positions'] . "</p> 
+    " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg $appview <br>$arch $edit $delete</div>";
+
+                }
+                echo "<center><div> Page: ";
+                for ($page = 1; $page <= $number_of_pages; $page++) {
+                    echo '<a href="myCurrentListings.php?page=' . $page . '">' . $page . '</a> ';
+                }
+                echo "</div></center>";
 
             }
             ?>

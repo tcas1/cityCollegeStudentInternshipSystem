@@ -21,7 +21,18 @@ include 'dbh.php';
 </head>
 <body>
 	<div class="container-fluid">
-		<div class = "row" >
+		<div class = "row" style="
+     background-color: skyblue;
+     border-top-color: initial;
+     border-top-style: solid;
+     border-top-width: initial;
+     border-right-color: initial;
+     border-right-style: solid;
+     border-right-width: initial;
+     border-left-color: initial;
+     border-left-style: solid;
+     border-left-width: initial;">
+
 			<div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3">
 				<img src="images/logo_city.png" >
 			</div>
@@ -42,7 +53,7 @@ include 'dbh.php';
 			</div>
 		</div>
 		<hr>
-		<div class = "row">
+		<div class = "row" style="border: solid">
 
 		<div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
 				<div class="panel panel-info">
@@ -105,21 +116,7 @@ include 'dbh.php';
                             <?php echo "<a href='viewInternship.php?id=".$_GET['id']."'> <button class=\"btn btn-primary\" type=\"reset\" style=\"width: 10%;margin-left: 8%\">Back</a>";?>
 
 						<!--<a href=""> <button class="btn btn-primary" type="submit" style="width: 10%;margin-left: 70%">Apply</button>-->
-                               <?php $sql="SELECT email FROM applications WHERE email='$email'";
-
-                                $result = mysqli_query($conn, $sql);
-
-                                $emailcheck=mysqli_num_rows($result);
-
-                                if($emailcheck>0){
-                                echo "";
-                                exit();
-                                }
-                                else{
-                                    echo "<button class=\"btn btn-primary \" name=\"Submit\" type=\"submit\" style=\"width: 10%;margin-left: 70%\">Apply</button>";
-                                }
-                                ?>
-
+                                <button class="btn btn-primary " name="Submit" type="submit" style="width: 10%;margin-left: 70%">Apply</button>
                             </form>
                         </div>
                 </div>
@@ -131,7 +128,7 @@ if(isset($_POST['Submit'])) {
 
     $level = $_POST['level'];
     $getid = $_REQUEST['id'];
-    $sql = "INSERT INTO applications (firstName,lastName,email,level, internship_Id) VALUES ('{$_SESSION['firstName']}','{$_SESSION['lastName']}','{$_SESSION['email']}','$level','$getid')";
+    $sql = "INSERT INTO applications (firstName,lastName,email,level, internship_Id, applicant_id) VALUES ('{$_SESSION['firstName']}','{$_SESSION['lastName']}','{$_SESSION['email']}','$level','$getid' , {$_SESSION['id']})";
     $result = mysqli_query($conn, $sql);
     header("Location: index.php?submitapp=success");
 

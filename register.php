@@ -69,28 +69,28 @@ elseif (strpos($url, 'signup=success')!==false){
         <div class = "col-xs-6 col-sm-6 col-md-6 col-lg-6" name="announced_iternships">
             <div style="overflow-y: scroll; height:400px;">
 
-            <!-- Here we put announced internships-->
-            <?php
-            $sql="SELECT * FROM internships ORDER BY internship_Id DESC LIMIT 10";
+                <!-- Here we put announced internships-->
+                <?php
+                $sql="SELECT * FROM internships ORDER BY internship_Id DESC LIMIT 10";
 
-            $result = mysqli_query($conn, $sql);
+                $result = mysqli_query($conn, $sql);
 
 
-            while($row = mysqli_fetch_array($result))
-            {
-                if($row['CV']==1) {
-                    $msg = "Yes";
-                }
-                else {
-                    $msg = "No";
-                }
+                while($row = mysqli_fetch_array($result))
+                {
+                    if($row['CV']==1) {
+                        $msg = "Yes";
+                    }
+                    else {
+                        $msg = "No";
+                    }
 
-                echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']."
+                    echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']."
                 <p>Open Positions: ".$row['open_Positions']."</p>
                 "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
 
-            }
-            ?>
+                }
+                ?>
             </div>
         </div>
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 col-md-offset-1" style = "background-color: #dedef8;

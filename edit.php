@@ -9,35 +9,44 @@ session_start();
 
 include 'dbh.php';
 
+if(isset($_POST['update'])){
+
+    $title=$_POST['title'];
+    $description=$_POST['description'];
+    $duration=$_POST['duration'];
+    $CV = $_POST['CV'];
+    $date = $_POST['date'];
+    $datetime = $_POST['datetime'];
+    $open_Positions=$_POST['open_Positions'];
+    $internship_Level = $_POST['internship_Level'];
+    $chk="";
+    foreach($internship_Level as $chk1)
+    {
+        $chk .= $chk1.",";
+    }
 
 
-//if(isset($_POST['update'])){
-//
-//    $email=$_POST['email'];
-//    $firstName=$_POST['firstName'];
-//    $lastName=$_POST['lastName'];
-//    $level=$_POST['level'];
-//
-//
-//    $sql= "UPDATE users SET firstName='$firstName',lastName='$lastName',email='$email',level='$level' WHERE Id='{$_SESSION['id']}'";
-//    $result = mysqli_query($conn, $sql);
-//
-//    if(!$result )
-//    {
-//        echo "Could not update data:";
-//    }
-//    else
-//    {
-//        header("Location:myCurrentListings.php?internupdate=success");
-//    }
-//
-//}
+    $sql= "UPDATE internships SET title='$title',description='$description',duration='$duration', internship_Level='$chk',
+    CV='$CV',datetime='$datetime', open_Positions='$open_Positions', date='$date' WHERE internship_Id='".$_GET['id']."'";
+
+    $result = mysqli_query($conn, $sql);
+
+    if(!$result )
+    {
+        echo "Could not update data:";
+    }
+    else
+    {
+        header("Location:myCurrentListings.php?internupdate=success");
+    }
+
+}
 
 $sql="SELECT * FROM internships WHERE internship_Id='".$_GET['id']."'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
-
 ?>
+
 <html>
 
 <html>
@@ -53,7 +62,18 @@ $row = mysqli_fetch_array($result);
 </head>
 <body>
 <div class="container-fluid">
-    <div class = "row" >
+    <div class = "row" style="
+     background-color: skyblue;
+     border-top-color: initial;
+     border-top-style: solid;
+     border-top-width: initial;
+     border-right-color: initial;
+     border-right-style: solid;
+     border-right-width: initial;
+     border-left-color: initial;
+     border-left-style: solid;
+     border-left-width: initial;">
+
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <img src="images/logo_city.png" >
         </div>
@@ -64,7 +84,7 @@ $row = mysqli_fetch_array($result);
                        style="display: inline-block; width: 80%;border-radius:20px">
             </form>
         </div>
-        <div class = "col-xs-3 col-sm-3 col-md-5 col-lg-3">
+        <div class = "col-xs-3 col-sm-3 col-md-5 col-lg-3" style="width: auto">
             <br><br><br>
             <ul class = "nav navbar-nav">
                 <a href="index.php" class="btn-primary btn-lg"> Home</a>
@@ -73,13 +93,12 @@ $row = mysqli_fetch_array($result);
             </ul>
         </div>
     </div>
-    <hr>
-    <div class = "row">
+    <div class = "row" style="border: solid">
 
         <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <form method="post" action="insert.php" enctype="multipart/form-data">
+                    <form method="post"  enctype="multipart/form-data">
                         <table width = "400" border = "0" cellspacing = "1"
                                cellpadding = "2">
 
@@ -128,12 +147,21 @@ $row = mysqli_fetch_array($result);
                                 <td>
 
 
+<!--                            <tr>-->
+<!--                                <td width = "100"></td>-->
+<!--                                <td>-->
+<!--                                    Expiration Date <br>-->
+<!--                                    <input type="datetime-local" name="datetime" id="datetime" value="--><?php //echo $row['datetime']?><!--" required> <br>-->
+<!--                            </tr>-->
+
                             <tr>
                                 <td width = "100"></td>
                                 <td>
                                     Expiration Date <br>
-                                    <input type="datetime-local" name="datetime" id="datetime" value="<?php echo $row['datetime']?>" required> <br>
+                                    <input type="date" name="date" id="date" value="<?php echo $row["date"] ?>" required> <br>
+
                             </tr>
+
                             <tr>
                                 <td width = "100"> </td>
                                 <td> </td>
@@ -150,7 +178,7 @@ $row = mysqli_fetch_array($result);
                             <tr>
                                 <td width = "100"> </td>
                                 <td>
-                                    <input name = "add" type = "submit" id = "add"
+                                    <input name = "update" type = "submit" id = "update"
                                            value = "Update Internship">
                                 </td>
                             </tr>

@@ -22,7 +22,18 @@ include 'dbh.php';
 </head>
 <body>
 <div class="container-fluid">
-    <div class = "row" >
+    <div class = "row" <div class = "row" style="
+     background-color: skyblue;
+     border-top-color: initial;
+     border-top-style: solid;
+     border-top-width: initial;
+     border-right-color: initial;
+     border-right-style: solid;
+     border-right-width: initial;
+     border-left-color: initial;
+     border-left-style: solid;
+     border-left-width: initial;">
+
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <img src="images/logo_city.png" >
         </div>
@@ -47,48 +58,77 @@ include 'dbh.php';
 
 
     </div>
-    <hr>
-    <div class = "row">
+    <div class = "row" style="border: solid">
 
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 " style="border-right: solid; border-right-width: 2px; height: 1200px">
-            <nav>
-                <ul>
-                    <li><a href="myAccount.php">My Account</a> </li>
-                    <li><a href="myCurrentListings.php">My Current Internships</a> </li>
+            <nav class="nav-sidebar">
+                <ul class="nav">
+                    <h3>Menu</h3>
+                    <li><a href="myAccount.php">My Account</a></li>
+                    <li><a href="myCurrentListings.php">My Current Internships</a></li>
                     <li><a href="myPastListings.php">My Archived Internships</a></li>
+                    <li class="nav-divider"></li>
                 </ul>
             </nav>
         </div>
+
         <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <!--                    Internships-->
             <h1>My Past Internships</h1>
 
             <br>
             <?php
-
+            $results_per_page = 10;
             $sql="SELECT * FROM internships WHERE isarchived=1 AND poster_Id='{$_SESSION['id']}' ";
-
             $result = mysqli_query($conn, $sql);
-            if (!$result) {
-                printf("Error: %s\n", mysqli_error($conn));
+            $number_of_results = mysqli_num_rows($result);
+            $number_of_pages = ceil($number_of_results/$results_per_page);
 
-                exit();
+            if (!isset($_GET['page'])) {
+                $page = 1;
+            } else {
+                $page = $_GET['page'];
             }
 
-            echo "<div class=\"Example\">"."<a href=\"Listingcreator.php\">Create an internship.</a></div> ";
+//            if (!$result) {
+//                printf("Error: %s\n", mysqli_error($conn));
+//
+//                exit();
+//            }
 
-            while($row = mysqli_fetch_array($result))
+            echo "<div class=\"panel panel-info\">";
+            echo " <div class=\"panel-heading\">";
+            echo "<h3>Create an Internship</h3>";
+            echo "<a href=\"internshipform2.html\"><button class=\"btn btn-primary\" type=\"submit\" style=\"width: 15%;margin-left: 80%\">Create</button></a>\n";
+            echo " </div>";
+            echo " </div>";
+
+
+            if(mysqli_num_rows($result) <= 0)
             {
-                if($row['CV']==1) {
-                    $msg = "Yes";
-                }
-                else {
-                    $msg = "No";
-                }
+                echo "You currently do not have any internships Archived";
+            }
 
-                echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']." 
-    <p>Open Positions: ".$row['open_Positions']."</p> 
-    "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
+            else {
+                while ($row = mysqli_fetch_array($result)) {
+                    if ($row['CV'] == 1) {
+                        $msg = "Yes";
+                    } else {
+                        $msg = "No";
+                    }
+
+                    $appview = "<a href='viewApplicants.php?id=" . $row['internship_Id'] . "'>View Applicants</a>";
+                    $repost = "<a href='repost.php?id=" . $row['internship_Id'] . "'>Repost</a>";
+
+                    echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
+    <p>Open Positions: " . $row['open_Positions'] . "</p> 
+    " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <br> $appview $repost</div>";
+                }
+                echo "<center><div> Page: ";
+                for ($page = 1; $page <= $number_of_pages; $page++) {
+                    echo '<a href="myPastListings.php?page=' . $page . '">' . $page . '</a> ';
+                }
+                echo "</div></center>";
 
             }
             ?>
