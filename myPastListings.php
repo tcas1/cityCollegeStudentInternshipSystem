@@ -58,7 +58,7 @@ include 'dbh.php';
 
 
     </div>
-    <div class = "row" style="border: solid">
+    <div class = "row" style="border: solid; height: auto;">
 
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 " style="border-right: solid; border-right-width: 2px; height: 1200px">
             <nav class="nav-sidebar">
@@ -78,7 +78,7 @@ include 'dbh.php';
 
             <br>
             <?php
-            $results_per_page = 10;
+            $results_per_page = 8;
             $sql="SELECT * FROM internships WHERE isarchived=1 AND poster_Id='{$_SESSION['id']}' ";
             $result = mysqli_query($conn, $sql);
             $number_of_results = mysqli_num_rows($result);

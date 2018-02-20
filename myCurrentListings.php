@@ -66,7 +66,7 @@ if (strpos($url, 'archive=success')!==false){
 
 
     </div>
-    <div class = "row" style="border: solid">
+    <div class = "row" style="border: solid; height: 1400px;">
 
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 " style="border-right: solid; border-right-width: 2px; height: 1200px">
 
@@ -88,7 +88,7 @@ if (strpos($url, 'archive=success')!==false){
 
             <br>
             <?php
-            $results_per_page = 10;
+            $results_per_page = 8;
             $sql="SELECT * FROM internships WHERE isarchived=0 AND poster_Id='{$_SESSION['id']}' ";
             //$sql2="SELECT * FROM users";
             //$result2 = mysqli_query($conn, $sql2);

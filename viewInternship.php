@@ -94,14 +94,19 @@ include 'dbh.php';
 
             				?>
 						<br>
-						<a href="index.php"><button class="btn btn-primary" type="reset" style="width: 10%;margin-left: 8%">Back</button>
-                            <a href="createPdf.php/?id=<?php echo $_GET['id'] ?>" target="_blank" > <button class="btn btn-primary" type="submit" style="width: 15%;margin-left: 40%">Download PDF</button>
-                        <?php
-                        if(isset($_SESSION['student'])) {
-                                echo "<a href='submitApplication.php?id=" . $_GET['id'] . "'> <button class=\"btn btn-primary\" type=\"submit\" style=\"width: 10%;margin-left: 8%\">Apply</a>";
+
+                        <ul class = "nav navbar-nav" style="margin-left: 300px; float:none;">
+
+                            <a href="index.php" class="btn-primary btn-lg" type="reset">Back</a>
+                            <a href="createPdf.php/?id=<?php echo $_GET['id'] ?>" target="_blank" class="btn-primary btn-lg" type="submit" >Download PDF</a>
+                            <?php
+                            if(isset($_SESSION['student'])) {
+                                echo "<a href='submitApplication.php?id=" . $_GET['id'] . "' type='submit' class='btn-primary btn-lg'> Apply</a>";
                             }
-                        ?>
+                            ?>
+                        </ul>
 					</div>
+
 				</div>
 		</div>
 		</div>

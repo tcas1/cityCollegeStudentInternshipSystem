@@ -12,7 +12,7 @@ include 'dbh.php';
 if(isset($_POST['repost'])){
 
     $title=$_POST['title'];
-    $description=$_POST['description'];
+    $description = mysqli_real_escape_string($conn, $_POST['description']);
     $duration=$_POST['duration'];
     $CV = $_POST['CV'];
     $date = $_POST['date'];

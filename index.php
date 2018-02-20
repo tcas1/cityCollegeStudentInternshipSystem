@@ -51,11 +51,18 @@ elseif (strpos($url, 'internupload=success')!==false){
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <img src="images/logo_city.png" >
         </div>
+
+
+
         <div class = "col-xs-4 col-sm-4 col-md-4 col-lg-4">
             <h1 class="thick-heading"> CIMS</h1>
-            <form role="form">
-                <input type="text" id="search" class="form-control" placeholder="search "
+
+            <script type="text/javascript"> function submitSearch() {document.forms[search].submit();}</script>
+
+            <form id="search" role="form" action="" method="GET">
+                <input type="text" name="search" id="search" class="form-control" placeholder="Search"
                        style="display: inline-block; width: 80%;border-radius:20px">
+                <a href="javascript: submitSearch()"></a>
             </form>
 
         </div>
@@ -72,7 +79,7 @@ elseif (strpos($url, 'internupload=success')!==false){
 
 
     </div>
-    <div class = "row" style="border: solid;">
+    <div class = "row" style="border: solid; height: 1200px;">
 
         <div class = "col-xs-3 col-sm-3 col-md-3 col-lg-3 " style="
         border-right: solid;
@@ -102,11 +109,11 @@ elseif (strpos($url, 'internupload=success')!==false){
 
             </form>
         </div>
-        <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9" style="height: 100%">
+        <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <!--                    Internships-->
             <br>
             <?php
-            //            $results_per_page = 10;
+            //            $results_per_page = 8;
 
             $sql="SELECT * FROM internships";
             //            $sql2="SELECT * FROM users";
@@ -134,13 +141,54 @@ elseif (strpos($url, 'internupload=success')!==false){
                 echo "<div class=\"panel panel-info\">";
                 echo " <div class=\"panel-heading\">";
                 echo "<h3>Create an Internship</h3>";
-                echo "<a href=\"internshipform2.html\"><button class=\"btn btn-primary\" type=\"submit\" style=\"width: 15%;margin-left: 80%\">Create</button></a>\n";
+                echo "<a href=\"internshipform2.html\"><button class=\"btn btn-primary\" type=\"submit\" style=\"width: 15%;margin-left: 80%\">Create</button></a>";
                 echo " </div>";
                 echo " </div>";
 
             }
-            if(!isset($_GET['reset'])&&!isset($_GET['submit'])){
-                $results_per_page = 10;
+            if(isset($_GET['search'])) {
+                $results_per_page = 8;
+                $search = mysqli_real_escape_string($conn, $_GET['search']);
+                $sql = "SELECT * FROM internships WHERE title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%'";
+                $result = mysqli_query($conn, $sql);
+                //$row = mysqli_fetch_array($result);
+                $number_of_results = mysqli_num_rows($result);
+                $number_of_pages = ceil($number_of_results / $results_per_page);
+
+                if (!isset($_GET['page'])) {
+                    $page = 1;
+                } else {
+                    $page = $_GET['page'];
+                }
+
+                $this_page_first_result = ($page - 1) * $results_per_page;
+                $sql = "SELECT * FROM internships WHERE title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%' LIMIT $this_page_first_result ,  $results_per_page";
+                $result = mysqli_query($conn, $sql);
+
+
+                if (mysqli_num_rows($result) <= 0) {
+                    echo "No search results found";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        if ($row['CV'] == 1) {
+                            $msg = "Yes";
+                        } else {
+                            $msg = "No";
+                        }
+                        echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+
+                    };
+                    echo "<center><div> Page: ";
+                    for ($page = 1; $page <= $number_of_pages; $page++) {
+                        echo '<a href="index.php?search=' . $search . '&page=' . $page . '">' . $page . '</a> ';
+                    }
+                    echo "</div></center>";
+                }
+            }
+
+            if(!isset($_GET['reset'])&&!isset($_GET['submit'])&&!isset($_GET['search'])){
+                $results_per_page = 8;
                 $sql="SELECT * FROM internships";
                 $result = mysqli_query($conn, $sql);
                 $number_of_results = mysqli_num_rows($result);
@@ -166,10 +214,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                         $msg = "No";
                     }
 
-                    echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']."
-                            <p>Open Positions: ".$row['open_Positions']."</p>
-                            "." Deadline: ".$row['date']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
-
+                    echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
                 }
                 echo "<center><div> Page: ";
                 for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -182,7 +228,7 @@ elseif (strpos($url, 'internupload=success')!==false){
 
 
             if(isset($_GET['reset'])){
-                $results_per_page = 10;
+                $results_per_page = 8;
                 $sql="SELECT * FROM internships";
                 $result = mysqli_query($conn, $sql);
                 $number_of_results = mysqli_num_rows($result);
@@ -208,10 +254,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                         $msg = "No";
                     }
 
-                    echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']."
-                            <p>Open Positions: ".$row['open_Positions']."</p>
-                            "." Deadline: ".$row['date']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
-
+                    echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
                 }
                 echo "<center><div> Page: ";
                 for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -233,9 +277,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                     $msg = "No";
                 }
 
-                echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']."
-						<p>Open Positions: ".$row['open_Positions']."</p>
-						"." Deadline: ".$row['date']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
             }
 
@@ -251,7 +294,7 @@ elseif (strpos($url, 'internupload=success')!==false){
 
                 if ($_GET['duration'] == '4months' && $_GET['internship_Level']=='level1') {
 
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%level%1%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -281,9 +324,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-                                  <p>Open Positions: " . $row['open_Positions'] . "</p> " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] .
-                                " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
                         };
                         echo "<center><div> Page: ";
@@ -298,7 +340,7 @@ elseif (strpos($url, 'internupload=success')!==false){
 
                 elseif ($_GET['duration'] == '4months' && $_GET['internship_Level']=='level2') {
 
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%level 2%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -326,10 +368,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
-
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
                         };
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -343,7 +383,7 @@ elseif (strpos($url, 'internupload=success')!==false){
 
                 elseif ($_GET['duration'] == '4months' && $_GET['internship_Level']=='level3') {
 
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%level 3%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -371,10 +411,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
-
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
                         };
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -387,7 +425,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 //  4 MONTHS GRADUATE_______________________________________________________________________________________________________________
 
                 elseif ($_GET['duration'] == '4months'&& $_GET['internship_Level']=='Graduate') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%Graduate%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -415,10 +453,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
-
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
                         };
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -431,7 +467,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 //8 MONTHS LEVEL 1____________________________________________________________________________________________________________________
 
                 elseif ($_GET['duration'] == '8months' && $_GET['internship_Level']=='level1') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%level 1%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -459,9 +495,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-                  <p>Open Positions: " . $row['open_Positions'] . "</p> 
-                  " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -474,7 +509,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 //8 MONTHS LEVEL 2____________________________________________________________________________________________________________________
 
                 elseif ($_GET['duration'] == '8months' && $_GET['internship_Level']=='level2') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%level 2%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -502,9 +537,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
                         };
                         echo "<center><div> Page: ";
@@ -518,7 +552,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 //8 MONTHS LEVEL 3____________________________________________________________________________________________________________________
 
                 elseif ($_GET['duration'] == '8months' && $_GET['internship_Level']=='level3') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%level 3%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -546,9 +580,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
                         };
                         echo "<center><div> Page: ";
@@ -562,7 +595,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 //8 MONTHS GRADUATE____________________________________________________________________________________________________________________
 
                 elseif ($_GET['duration'] == '8months'&& $_GET['internship_Level']=='Graduate') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%Graduate%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -590,9 +623,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
                         };
                         echo "<center><div> Page: ";
@@ -606,7 +638,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 //12 MONTHS LEVEL 1______________________________________________________________________________________________________________________________
 
                 elseif ($_GET['duration'] == '12months'&& $_GET['internship_Level']=='level1') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%level 1%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -634,9 +666,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
                         }
                         echo "<center><div> Page: ";
@@ -650,7 +681,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 //12 MONTHS LEVEL 2______________________________________________________________________________________________________________________________
 
                 elseif ($_GET['duration'] == '12months' && $_GET['internship_Level']=='level2') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%level 2%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -678,9 +709,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
                         };
                         echo "<center><div> Page: ";
@@ -694,7 +724,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 //12 MONTHS LEVEL 3______________________________________________________________________________________________________________________________
 
                 elseif ($_GET['duration'] == '12months' && $_GET['internship_Level']=='level3') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%level 3%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -722,9 +752,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
                         };
                         echo "<center><div> Page: ";
@@ -738,7 +767,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 //12 MONTHS GRADUATE______________________________________________________________________________________________________________________________
 
                 elseif ($_GET['duration'] == '12months'&& $_GET['internship_Level']=='Graduate') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%Graduate%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -766,9 +795,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
                         };
                         echo "<center><div> Page: ";
@@ -782,7 +810,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 //SELECT SELECT
 
                 elseif ($_GET['duration'] == 'select'&& $_GET['internship_Level']=='select') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -809,10 +837,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                                 $msg = "No";
                             }
 
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . "
-                                <p>Open Positions: " . $row['open_Positions'] . "</p>
-                                " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=" . $row['internship_Id'] . "'>View Job</a></div>";
-
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -823,7 +849,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 }
 
                 elseif ($_GET['duration'] == '4months' && $_GET['internship_Level']=='select') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=4";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -851,9 +877,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
                         };
                         echo "<center><div> Page: ";
@@ -864,7 +889,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                     }
                 }
                 elseif ($_GET['duration'] == '8months' && $_GET['internship_Level']=='select') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=8";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -890,9 +915,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
                         };
                         echo "<center><div> Page: ";
@@ -902,7 +926,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                         echo "</div></center>";
                     }
                 }elseif ($_GET['duration'] == '12months' && $_GET['internship_Level']=='select') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE duration=12";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -928,9 +952,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-            <p>Open Positions: " . $row['open_Positions'] . "</p> 
-            " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
                         };
                         echo "<center><div> Page: ";
@@ -942,7 +965,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 }
 
                 elseif ($_GET['duration'] == 'select' && $_GET['internship_Level']=='level1') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level 1%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -968,9 +991,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-                  <p>Open Positions: " . $row['open_Positions'] . "</p> 
-                  " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -981,7 +1003,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 }
 
                 elseif ($_GET['duration'] == 'select' && $_GET['internship_Level']=='level2') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level 2%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -1007,9 +1029,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-                  <p>Open Positions: " . $row['open_Positions'] . "</p> 
-                  " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -1020,7 +1041,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 }
 
                 elseif ($_GET['duration'] == 'select' && $_GET['internship_Level']=='level3') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level 3%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -1046,9 +1067,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-                  <p>Open Positions: " . $row['open_Positions'] . "</p> 
-                  " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -1059,7 +1079,7 @@ elseif (strpos($url, 'internupload=success')!==false){
                 }
 
                 elseif ($_GET['duration'] == 'select' && $_GET['internship_Level']=='Graduate') {
-                    $results_per_page = 10;
+                    $results_per_page = 8;
                     $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%Graduate%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
@@ -1085,9 +1105,8 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-                  <p>Open Positions: " . $row['open_Positions'] . "</p> 
-                  " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <a href='viewInternship.php?id=".$row['internship_Id']."'>View Job</a></div>";
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
