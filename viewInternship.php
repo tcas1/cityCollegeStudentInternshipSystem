@@ -89,7 +89,7 @@ include 'dbh.php';
 
                				 echo "<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']."
                 			<p>Open Positions: ".$row['open_Positions']."</p>
-                			"." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg";
+                			"." Deadline: ".$row['date']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg";
             				}
 
             				?>
@@ -101,7 +101,20 @@ include 'dbh.php';
                             <a href="createPdf.php/?id=<?php echo $_GET['id'] ?>" target="_blank" class="btn-primary btn-lg" type="submit" >Download PDF</a>
                             <?php
                             if(isset($_SESSION['student'])) {
-                                echo "<a href='submitApplication.php?id=" . $_GET['id'] . "' type='submit' class='btn-primary btn-lg'> Apply</a>";
+                                $sql="SELECT * FROM applications WHERE applicant_id='{$_SESSION['id']}' AND internship_Id='".$_GET['id']."'";
+
+                                $result = mysqli_query($conn, $sql);
+
+                                $appcheck=mysqli_num_rows($result);
+
+                                if($appcheck>0){
+                                    echo "";
+                                    exit();
+                                }
+                                else{
+                                    echo "<a href='submitApplication.php?id=" . $_GET['id'] . "'> <button class=\"btn btn-primary\" type=\"submit\" style=\"width: 10%;margin-left: 8%\">Apply</a>";
+                                }
+                                //echo "<a href='submitApplication.php?id=" . $_GET['id'] . "'> <button class=\"btn btn-primary\" type=\"submit\" style=\"width: 10%;margin-left: 8%\">Apply</a>";
                             }
                             ?>
                         </ul>

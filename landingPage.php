@@ -14,7 +14,7 @@ elseif (strpos($url, 'error=email')!==false){
     echo "This email is already used. Please enter another one";
 }
 
-elseif (strpos($url, 'error=invalidemail')!==false){
+elseif (strpos($url, 'error=invalidinfo')!==false){
     $invalidEmail = "You must register with a City College email";
 }
 
@@ -123,7 +123,7 @@ elseif (strpos($url, 'signup=success')!==false){
                 <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required style="display: inline-block; width: 50%">
                 <br><br>
                 <div align="center">
-                    <button class="btn btn-primary btn-block btn-signin" type="submit" style="width: 60%;margin-left: 8%">Login</button>
+                    <button class="btn btn-primary btn-block btn-signin" type="submit" name="submit" style="width: 60%;margin-left: 8%">Login</button>
                     <a href="register.php">Register</a>
                 </div>
             </form>

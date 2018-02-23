@@ -113,6 +113,18 @@ elseif (strpos($url, 'internupload=success')!==false){
             <!--                    Internships-->
             <br>
             <?php
+
+            $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $invalidEmail = "";
+
+            //if error=empty is in the URL do this
+            if (strpos($url, 'submitapp=success')!==false){
+                echo "Your Application was successfully uploaded";
+
+            }
+            elseif (strpos($url, 'internupload=success')!==false) {
+                echo "Your Internship was successfully uploaded";
+            }
             //            $results_per_page = 8;
 
             $sql="SELECT * FROM internships";

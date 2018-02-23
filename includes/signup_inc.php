@@ -44,11 +44,19 @@ else {
             $sql= "INSERT INTO users (firstName,lastName,password,email,isLecturer) VALUES ('$firstName','$lastName','$password','$email','1')";
             $result = mysqli_query($conn, $sql);
             header("Location: ../landingPage.php?signup=success");
+            exit();
         }
         else {
-            $sql = "INSERT INTO users (firstName,lastName,password,email,isLecturer) VALUES ('$firstName','$lastName','$password','$email', '0')";
-            $result = mysqli_query($conn, $sql);
-            header("Location: ../landingPage.php?signup=success");
+            if(empty($secretcode)) {
+                $sql = "INSERT INTO users (firstName,lastName,password,email,isLecturer) VALUES ('$firstName','$lastName','$password','$email', '0')";
+                $result = mysqli_query($conn, $sql);
+                header("Location: ../landingPage.php?signup=success");
+                exit();
+            }
+            else{
+                header("Location: ../register.php?error=invalidcode");
+                exit();
+            }
         }
     }
 }

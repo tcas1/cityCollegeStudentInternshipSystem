@@ -34,7 +34,7 @@
                die('Could not enter data: ' . mysqli_error($conn));
             }
 
-             header("Location:index.php?internupload=success");
+             header("Location:myCurrentListings.php?internupload=success");
 
             mysqli_close($conn);
          }
