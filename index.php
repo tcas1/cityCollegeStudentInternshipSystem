@@ -162,7 +162,7 @@ include 'dbh.php';
             if(isset($_GET['search'])) {
                 $results_per_page = 8;
                 $search = mysqli_real_escape_string($conn, $_GET['search']);
-                $sql = "SELECT * FROM internships WHERE title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%'";
+                $sql = "SELECT * FROM internships WHERE isarchived=0 AND title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%'";
                 $result = mysqli_query($conn, $sql);
                 //$row = mysqli_fetch_array($result);
                 $number_of_results = mysqli_num_rows($result);
@@ -175,7 +175,7 @@ include 'dbh.php';
                 }
 
                 $this_page_first_result = ($page - 1) * $results_per_page;
-                $sql = "SELECT * FROM internships WHERE title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%' LIMIT $this_page_first_result ,  $results_per_page";
+                $sql = "SELECT * FROM internships WHERE isarchived=0 AND title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%' LIMIT $this_page_first_result ,  $results_per_page";
                 $result = mysqli_query($conn, $sql);
 
 
@@ -211,7 +211,7 @@ include 'dbh.php';
 
             if(!isset($_GET['reset'])&&!isset($_GET['submit'])&&!isset($_GET['search'])){
                 $results_per_page = 8;
-                $sql="SELECT * FROM internships";
+                $sql="SELECT * FROM internships WHERE isarchived=0";
                 $result = mysqli_query($conn, $sql);
                 $number_of_results = mysqli_num_rows($result);
                 $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -223,7 +223,7 @@ include 'dbh.php';
                 }
 
                 $this_page_first_result = ($page-1)*$results_per_page;
-                $sql="SELECT * FROM internships LIMIT $this_page_first_result ,  $results_per_page";
+                $sql="SELECT * FROM internships  WHERE isarchived=0 LIMIT $this_page_first_result ,  $results_per_page";
                 $result = mysqli_query($conn, $sql);
 
 
@@ -260,7 +260,7 @@ include 'dbh.php';
 
             if(isset($_GET['reset'])){
                 $results_per_page = 8;
-                $sql="SELECT * FROM internships";
+                $sql="SELECT * FROM internships  WHERE isarchived=0";
                 $result = mysqli_query($conn, $sql);
                 $number_of_results = mysqli_num_rows($result);
                 $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -272,7 +272,7 @@ include 'dbh.php';
                 }
 
                 $this_page_first_result = ($page-1)*$results_per_page;
-                $sql="SELECT * FROM internships LIMIT  $this_page_first_result , $results_per_page";
+                $sql="SELECT * FROM internships  WHERE isarchived=0 LIMIT  $this_page_first_result , $results_per_page";
                 $result = mysqli_query($conn, $sql);
 
 
@@ -344,7 +344,7 @@ include 'dbh.php';
                 if ($_GET['duration'] == '4months' && $_GET['internship_Level']=='level1') {
 
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%level%1%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=4 AND internship_Level LIKE '%level%1%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -357,7 +357,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%level%1%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=4 AND internship_Level LIKE '%level%1%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -399,7 +399,7 @@ include 'dbh.php';
                 elseif ($_GET['duration'] == '4months' && $_GET['internship_Level']=='level2') {
 
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%level 2%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=4 AND internship_Level LIKE '%level 2%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -412,7 +412,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%level%2%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=4 AND internship_Level LIKE '%level%2%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -451,7 +451,7 @@ include 'dbh.php';
                 elseif ($_GET['duration'] == '4months' && $_GET['internship_Level']=='level3') {
 
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%level 3%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=4 AND internship_Level LIKE '%level 3%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -464,7 +464,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%level%3%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=4 AND internship_Level LIKE '%level%3%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -502,7 +502,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == '4months'&& $_GET['internship_Level']=='Graduate') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%Graduate%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=4 AND internship_Level LIKE '%Graduate%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -515,7 +515,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=4 AND internship_Level LIKE '%Graduate%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=4 AND internship_Level LIKE '%Graduate%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -553,7 +553,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == '8months' && $_GET['internship_Level']=='level1') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%level 1%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=8 AND internship_Level LIKE '%level 1%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -566,7 +566,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%level%1%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=8 AND internship_Level LIKE '%level%1%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -604,7 +604,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == '8months' && $_GET['internship_Level']=='level2') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%level 2%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=8 AND internship_Level LIKE '%level 2%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -617,7 +617,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%level%2%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=8 AND internship_Level LIKE '%level%2%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -656,7 +656,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == '8months' && $_GET['internship_Level']=='level3') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%level 3%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=8 AND internship_Level LIKE '%level 3%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -669,7 +669,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%level%3%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=8 AND internship_Level LIKE '%level%3%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -708,7 +708,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == '8months'&& $_GET['internship_Level']=='Graduate') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%Graduate%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=8 AND internship_Level LIKE '%Graduate%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -721,7 +721,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=8 AND internship_Level LIKE '%Graduate%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=8 AND internship_Level LIKE '%Graduate%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -759,7 +759,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == '12months'&& $_GET['internship_Level']=='level1') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%level 1%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=12 AND internship_Level LIKE '%level 1%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -772,7 +772,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%level%1%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=12 AND internship_Level LIKE '%level%1%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -811,7 +811,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == '12months' && $_GET['internship_Level']=='level2') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%level 2%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=12 AND internship_Level LIKE '%level 2%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -824,7 +824,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%level%2%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=12 AND internship_Level LIKE '%level%2%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -863,7 +863,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == '12months' && $_GET['internship_Level']=='level3') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%level 3%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=12 AND internship_Level LIKE '%level 3%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -876,7 +876,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%level%3%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=12 AND internship_Level LIKE '%level%3%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -915,7 +915,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == '12months'&& $_GET['internship_Level']=='Graduate') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%Graduate%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=12 AND internship_Level LIKE '%Graduate%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -928,7 +928,7 @@ include 'dbh.php';
 
                     $this_page_first_result = ($page-1)*$results_per_page;
 
-                    $sql = "SELECT * FROM internships WHERE duration=12 AND internship_Level LIKE '%Graduate%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=12 AND internship_Level LIKE '%Graduate%' LIMIT $this_page_first_result, $results_per_page";
 
                     $result = mysqli_query($conn, $sql);
 
@@ -967,7 +967,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == 'select'&& $_GET['internship_Level']=='select') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results / $results_per_page);
@@ -979,7 +979,7 @@ include 'dbh.php';
                     }
 
                     $this_page_first_result = ($page - 1) * $results_per_page;
-                    $sql = "SELECT * FROM internships LIMIT $this_page_first_result , $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 LIMIT $this_page_first_result , $results_per_page";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) <= 0) {
@@ -1015,7 +1015,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == '4months' && $_GET['internship_Level']=='select') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=4";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=4";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results / $results_per_page);
@@ -1027,7 +1027,7 @@ include 'dbh.php';
                     }
 
                     $this_page_first_result = ($page - 1) * $results_per_page;
-                    $sql = "SELECT * FROM internships WHERE duration=4 LIMIT $this_page_first_result , $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=4 LIMIT $this_page_first_result , $results_per_page";
                     $result = mysqli_query($conn, $sql);
 
                     if(mysqli_num_rows($result) <= 0)
@@ -1064,7 +1064,7 @@ include 'dbh.php';
                 }
                 elseif ($_GET['duration'] == '8months' && $_GET['internship_Level']=='select') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=8";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=8";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results / $results_per_page);
@@ -1076,7 +1076,7 @@ include 'dbh.php';
                     }
 
                     $this_page_first_result = ($page - 1) * $results_per_page;
-                    $sql = "SELECT * FROM internships WHERE duration=8 LIMIT $this_page_first_result , $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=8 LIMIT $this_page_first_result , $results_per_page";
                     $result = mysqli_query($conn, $sql);
 
                     if(mysqli_num_rows($result) <= 0)
@@ -1110,7 +1110,7 @@ include 'dbh.php';
                     }
                 }elseif ($_GET['duration'] == '12months' && $_GET['internship_Level']=='select') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE duration=12";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=12";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results / $results_per_page);
@@ -1122,7 +1122,7 @@ include 'dbh.php';
                     }
 
                     $this_page_first_result = ($page - 1) * $results_per_page;
-                    $sql = "SELECT * FROM internships WHERE duration=12 LIMIT $this_page_first_result , $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND duration=12 LIMIT $this_page_first_result , $results_per_page";
                     $result = mysqli_query($conn, $sql);
 
                     if(mysqli_num_rows($result) <= 0)
@@ -1158,7 +1158,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == 'select' && $_GET['internship_Level']=='level1') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level 1%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND internship_Level LIKE '%level 1%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results / $results_per_page);
@@ -1170,7 +1170,7 @@ include 'dbh.php';
                     }
 
                     $this_page_first_result = ($page - 1) * $results_per_page;
-                    $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level%1%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND internship_Level LIKE '%level%1%' LIMIT $this_page_first_result, $results_per_page";
                     $result = mysqli_query($conn, $sql);
 
                     if(mysqli_num_rows($result) <= 0)
@@ -1205,7 +1205,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == 'select' && $_GET['internship_Level']=='level2') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level 2%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND internship_Level LIKE '%level 2%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results / $results_per_page);
@@ -1217,7 +1217,7 @@ include 'dbh.php';
                     }
 
                     $this_page_first_result = ($page - 1) * $results_per_page;
-                    $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level%2%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND internship_Level LIKE '%level%2%' LIMIT $this_page_first_result, $results_per_page";
                     $result = mysqli_query($conn, $sql);
 
                     if(mysqli_num_rows($result) <= 0)
@@ -1252,7 +1252,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == 'select' && $_GET['internship_Level']=='level3') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level 3%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND internship_Level LIKE '%level 3%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results / $results_per_page);
@@ -1264,7 +1264,7 @@ include 'dbh.php';
                     }
 
                     $this_page_first_result = ($page - 1) * $results_per_page;
-                    $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%level%3%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND internship_Level LIKE '%level%3%' LIMIT $this_page_first_result, $results_per_page";
                     $result = mysqli_query($conn, $sql);
 
                     if(mysqli_num_rows($result) <= 0)
@@ -1299,7 +1299,7 @@ include 'dbh.php';
 
                 elseif ($_GET['duration'] == 'select' && $_GET['internship_Level']=='Graduate') {
                     $results_per_page = 8;
-                    $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%Graduate%'";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND internship_Level LIKE '%Graduate%'";
                     $result = mysqli_query($conn, $sql);
                     $number_of_results = mysqli_num_rows($result);
                     $number_of_pages = ceil($number_of_results / $results_per_page);
@@ -1311,7 +1311,7 @@ include 'dbh.php';
                     }
 
                     $this_page_first_result = ($page - 1) * $results_per_page;
-                    $sql = "SELECT * FROM internships WHERE internship_Level LIKE '%Graduate%' LIMIT $this_page_first_result, $results_per_page";
+                    $sql = "SELECT * FROM internships WHERE isarchived=0 AND internship_Level LIKE '%Graduate%' LIMIT $this_page_first_result, $results_per_page";
                     $result = mysqli_query($conn, $sql);
 
                     if(mysqli_num_rows($result) <= 0)

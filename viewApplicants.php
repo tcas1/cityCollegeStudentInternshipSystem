@@ -53,7 +53,7 @@ include 'dbh.php';
         if(isset($_GET['search'])) {
             $results_per_page = 8;
             $search = mysqli_real_escape_string($conn, $_GET['search']);
-            $sql = "SELECT * FROM internships WHERE title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%'";
+            $sql = "SELECT * FROM internships WHERE isarchived=0 AND title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%'";
             $result = mysqli_query($conn, $sql);
             //$row = mysqli_fetch_array($result);
             $number_of_results = mysqli_num_rows($result);
@@ -67,7 +67,7 @@ include 'dbh.php';
             }
 
             $this_page_first_result = ($page - 1) * $results_per_page;
-            $sql = "SELECT * FROM internships WHERE title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%' LIMIT $this_page_first_result ,  $results_per_page";
+            $sql = "SELECT * FROM internships WHERE isarchived=0 AND title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%' LIMIT $this_page_first_result ,  $results_per_page";
             $result = mysqli_query($conn, $sql);
 
 

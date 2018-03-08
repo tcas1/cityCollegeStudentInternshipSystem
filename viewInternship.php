@@ -34,11 +34,62 @@ include 'dbh.php';
 			</div>
 			<div class = "col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				<h1 class="thick-heading"> CIMS</h1>
-				<form role="form">
-					<input type="text" id="search" class="form-control" placeholder="search "
-					style="display: inline-block; width: 80%;border-radius:20px">
-				</form>
+                <script type="text/javascript"> function submitSearch() {document.forms[search].submit();}</script>
+
+                <form id="search" role="form" action="" method="GET">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="Search"
+                           style="display: inline-block; width: 80%;border-radius:20px">
+                    <a href="javascript: submitSearch()"></a>
+                </form>
 			</div>
+
+            <?php
+            if(isset($_GET['search'])) {
+                $results_per_page = 8;
+                $search = mysqli_real_escape_string($conn, $_GET['search']);
+                $sql = "SELECT * FROM internships WHERE isarchived=0 AND title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%'";
+                $result = mysqli_query($conn, $sql);
+                //$row = mysqli_fetch_array($result);
+                $number_of_results = mysqli_num_rows($result);
+                $number_of_pages = ceil($number_of_results / $results_per_page);
+                header('Location:index.php?search='.$search);
+
+                if (!isset($_GET['page'])) {
+                    $page = 1;
+                } else {
+                    $page = $_GET['page'];
+                }
+
+                $this_page_first_result = ($page - 1) * $results_per_page;
+                $sql = "SELECT * FROM internships WHERE isarchived=0 AND title LIKE '%$search%' OR description LIKE '%$search%' OR internship_Level LIKE '%$search%' LIMIT $this_page_first_result ,  $results_per_page";
+                $result = mysqli_query($conn, $sql);
+
+
+                if (mysqli_num_rows($result) <= 0) {
+                    echo "No search results found";
+                } else {
+                    while ($row = mysqli_fetch_array($result)) {
+                        if ($row['CV'] == 1) {
+                            $msg = "Yes";
+                        } else {
+                            $msg = "No";
+                        }
+                        echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+
+                    };
+                    echo "<center><div> Page: ";
+                    for ($page = 1; $page <= $number_of_pages; $page++) {
+                        echo '<a href="index.php?search=' . $search . '&page=' . $page . '">' . $page . '</a> ';
+                    }
+                    echo "</div></center>";
+                }
+            }
+
+
+            ?>
+
+
 			<div class = "col-xs-3 col-sm-3 col-md-5 col-lg-3" style="width: auto">
 				<br><br><br>
 				<ul class = "nav navbar-nav">

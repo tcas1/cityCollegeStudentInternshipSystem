@@ -127,8 +127,18 @@ include 'dbh.php';
 
             <br>
             <?php
+            $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+            if (strpos($url, 'internshipdeleted=success')!==false) {
+                echo "<div class=\"alert\">
+                <span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>
+                Your Internship was successfully deleted.</div>";
+            }
+            ?>
+
+            <?php
             $results_per_page = 8;
-            $sql="SELECT * FROM internships WHERE isarchived=1 AND poster_Id='{$_SESSION['id']}' ";
+            $sql="SELECT * FROM internships WHERE isarchived=0 AND isarchived=1 AND poster_Id='{$_SESSION['id']}' ";
             $result = mysqli_query($conn, $sql);
             $number_of_results = mysqli_num_rows($result);
             $number_of_pages = ceil($number_of_results/$results_per_page);
@@ -139,7 +149,7 @@ include 'dbh.php';
                 $page = $_GET['page'];
             }
             $this_page_first_result = ($page-1)*$results_per_page;
-            $sql="SELECT * FROM internships WHERE isarchived=1 AND poster_Id='{$_SESSION['id']}' LIMIT $this_page_first_result ,  $results_per_page";
+            $sql="SELECT * FROM internships WHERE isarchived=0 AND isarchived=1 AND poster_Id='{$_SESSION['id']}' LIMIT $this_page_first_result ,  $results_per_page";
             $result = mysqli_query($conn, $sql);
 
 //            if (!$result) {

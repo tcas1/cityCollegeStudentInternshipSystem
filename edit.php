@@ -169,9 +169,9 @@ $row = mysqli_fetch_array($result);
                                     Internship Level <br>
                                     <input type="checkbox" name="internship_Level[]" value="Level 1 Year 1" <?php if(strpos($row['internship_Level'],'Year 1')) echo 'checked="checked"'; ?>> BSc Level 1 Year 1 (4 year program)<br>
                                     <input type="checkbox" name="internship_Level[]" value="Level 1 Year 2" <?php if(strpos($row['internship_Level'],'Year 2')) echo 'checked="checked"'; ?>> BSc Level 1 Year 2 (4 year program)<br>
-                                    <input type="checkbox" name="internship_Level[]" value="level 1" <?php if(strpos($row['internship_Level'],'level 1')) echo 'checked="checked"'; ?>>Level 1<br>
-                                    <input type="checkbox" name="internship_Level[]" value="Level 2" <?php if(strpos($row['internship_Level'],'Level 2')) echo 'checked="checked"'; ?>>Level 2<br>
-                                    <input type="checkbox" name="internship_Level[]" value="Level 3" <?php if(strpos($row['internship_Level'],'Level 3')) echo 'checked="checked"'; ?>>Level 3<br>
+                                    <input type="checkbox" name="internship_Level[]" value="Level 1" <?php if(strpos($row['internship_Level'],'vel 1')) echo 'checked="checked"'; ?>>Level 1<br>
+                                    <input type="checkbox" name="internship_Level[]" value="Level 2" <?php if(strpos($row['internship_Level'],'vel 2')) echo 'checked="checked"'; ?>>Level 2<br>
+                                    <input type="checkbox" name="internship_Level[]" value="Level 3" <?php if(strpos($row['internship_Level'],'vel 3')) echo 'checked="checked"'; ?>>Level 3<br>
                                     <input type="checkbox" name="internship_Level[]" value="Graduate" <?php if(strpos($row['internship_Level'],'Graduate')) echo 'checked="checked"'; ?>>Graduate<br> <br> </td>
 
                             </tr>
