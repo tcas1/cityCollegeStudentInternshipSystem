@@ -160,10 +160,24 @@ include 'dbh.php';
                 }
             }
             ?>
+            <br><br>
+            <?php
+            $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
-<!--            <a download="--><?php //echo $files ?><!--" href="cvs/--><?php //echo $files[1] ?><!--">--><?php //$files[1] ?><!--</a>-->
-<!--            <a href="cvs/--><?php //echo $row['filename']; ?><!--" download>Download CV</a>-->
+            if (strpos($url, 'redirect=myCurrentListings')!==false){
+                echo "<a href=\"myCurrentListings.php\" class=\"btn-primary btn-lg\" type=\"reset\">Back</a>";
+            }
 
+            elseif (strpos($url, 'redirect=myPastListings')!==false){
+                echo "<a href=\"myPastListings.php\" class=\"btn-primary btn-lg\" type=\"reset\">Back</a>";
+            }
+
+            else{
+                echo "<a href=\"index.php\" class=\"btn-primary btn-lg\" type=\"reset\">Back</a>";
+
+            }
+
+            ?>
 
         </div>
 

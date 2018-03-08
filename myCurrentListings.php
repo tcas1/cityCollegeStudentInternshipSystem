@@ -3,14 +3,7 @@
 session_start();
 
 include 'dbh.php';
-$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
-if (strpos($url, 'archive=success')!==false){
-    echo "Your Internship has been successfully archive. You can now find it in the Archive Listing Tab";
-}
-elseif (strpos($url, 'internupload=success')!==false) {
-    echo "Your Internship was successfully uploaded";
-}
 ?>
 
 <html>
@@ -136,6 +129,31 @@ elseif (strpos($url, 'internupload=success')!==false) {
             <!--                    Internships-->
             <h1>My Current Internships</h1>
 
+            <?php
+            $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+            if (strpos($url, 'archive=success')!==false){
+                echo "<div class=\"alert\">
+                <span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>
+                Your Internship has been successfully archive. You can now find it in the Archive Listing Tab</div>";
+            }
+            elseif (strpos($url, 'internupload=success')!==false) {
+                echo "<div class=\"alert\">
+                <span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>
+                Your Internship was successfully uploaded.</div>";
+            }
+            elseif (strpos($url, 'internshipdeleted=success')!==false) {
+                echo "<div class=\"alert\">
+                <span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>
+                Your Internship was successfully deleted.</div>";
+            }
+            elseif (strpos($url, 'internupdate=success')!==false) {
+                echo "<div class=\"alert\">
+                <span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>
+                Your Internship was successfully Re-Uploaded.</div>";
+            }
+            ?>
+
             <br>
             <?php
             $results_per_page = 8;
@@ -183,19 +201,18 @@ elseif (strpos($url, 'internupload=success')!==false) {
                     }
 
                     if ($_SESSION['lecturer']) {
-                        $appview = "<a href='viewApplicants.php?id=" . $row['internship_Id'] . "'>View Applicants</a>";
-                        $arch = "<a href='arch.php?id=" . $row['internship_Id'] . "'>Archive</a>";
-                        $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "'>Edit</a>";
-                        $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "'>Delete</a>";
+                        $appview = "<a href='viewApplicants.php?id=" . $row['internship_Id'] . "&redirect=myCurrentListings'>View Applicants</a>";
+                        $arch = "<a href='arch.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Archive\" src=\"images/archiveicon.png\" width=\"19\" height=\"19\"></a>";
+                        $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                        $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
 
                     } else {
                         $appview = "";
                         $arch = "";
                     }
 
-                    echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-    <p>Open Positions: " . $row['open_Positions'] . "</p> 
-    " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg $appview <br>$arch $edit $delete</div>";
+                    echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "&redirect=myCurrentListings'>" . $row['title'] . " $delete $edit $arch </h4></a> <br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><br>$appview   </div>";
 
                 }
                 echo "<center><div> Page: ";

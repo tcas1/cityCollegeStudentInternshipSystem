@@ -61,3 +61,32 @@ p:nth-child(4) {
 
     float: right;
 }
+
+.alert {
+    padding: 20px;
+    border-radius: 25px;
+    background-color: green;
+    color: white;
+}
+
+.erroralert {
+    padding: 10px;
+    border-radius: 15px;
+    background-color: red;
+    color: white;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}

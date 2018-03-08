@@ -39,7 +39,7 @@ $pdf->MultiCell(0,5,'CV Required: '.$cv,0,'L');
 
 $pdf->MultiCell(0,5,'Open Positions: '.$row['open_Positions'],0,'R');
 $pdf->MultiCell(0,5,'Duration: '.$row['duration'],0,'R');
-$pdf->MultiCell(0,5,'Deadline: '.$row['datetime'],0,'R');
+$pdf->MultiCell(0,5,'Deadline: '.$row['date'],0,'R');
 
 
 $pdf->Output();

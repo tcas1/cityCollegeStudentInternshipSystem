@@ -21,7 +21,7 @@ if(isset($_POST['update']) && isset($_SESSION['student'])){
     }
     else
     {
-        echo "Updated data successfully\n";
+        header("Location:myAccount.php?accountupdate=success");
     }
 
 }
@@ -41,7 +41,7 @@ elseif(isset($_POST['update']) && isset($_SESSION['lecturer'])){
     }
     else
     {
-        echo "Updated data successfully\n";
+        header("Location:myAccount.php?accountupdate=success");
     }
 
 }
@@ -175,7 +175,19 @@ $row = mysqli_fetch_array($result);
 
         <div class = "col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <!--Internships-->
-            <?php echo "<h1> {$row['firstName']} {$row['lastName']}'s Account</h1>"; ?>
+
+            <?php
+            $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+            if (strpos($url, 'accountupdate=success')!==false){
+                echo "<div class=\"alert\">
+                <span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>
+                Your Account has been successfully updated</div>";
+            }
+
+            echo "<h1> {$row['firstName']} {$row['lastName']}'s Account</h1>";
+
+            ?>
             <br><br>
             <form method="POST" action="myAccount.php">
                 First Name: <input placeholder="First Name" value="<?php echo "{$row['firstName']}"?>" name="firstName" type="text" required><br><br>

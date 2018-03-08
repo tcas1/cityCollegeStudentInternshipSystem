@@ -38,6 +38,12 @@ if(isset($_POST['submit'])) {
                     $_SESSION['lecturer'] = "lect";
                     die;
                 }
+                elseif ($row['isAdmin'] == 1) {
+                    /* landing page once user logs in*/
+                    header("Location: ../index.php");
+                    $_SESSION['admin'] = "admin";
+                    die;
+                }
 
                 else {
                     /* landing page once user logs in*/

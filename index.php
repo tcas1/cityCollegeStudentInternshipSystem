@@ -4,20 +4,18 @@ session_start();
 
 include 'dbh.php';
 
-
-
-$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-$invalidEmail = "";
-
+//$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+//$invalidEmail = "";
 //if error=empty is in the URL do this
-if (strpos($url, 'submitapp=success')!==false){
-    echo "Your Application was successfully uploaded";
-
-}
-elseif (strpos($url, 'internupload=success')!==false){
-    echo "Your Internship was successfully uploaded";
-
-}?>
+//if (strpos($url, 'submitapp=success')!==false){
+//    echo "Your Application was successfully uploaded";
+//
+//}
+//elseif (strpos($url, 'internupload=success')!==false){
+//    echo "Your Internship was successfully uploaded";
+//
+//}
+?>
 
 <html>
 <head>
@@ -119,11 +117,14 @@ elseif (strpos($url, 'internupload=success')!==false){
 
             //if error=empty is in the URL do this
             if (strpos($url, 'submitapp=success')!==false){
-                echo "Your Application was successfully uploaded";
-
+                echo "<div class=\"alert\">
+                <span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>
+                Your Application was successfully uploaded</div>";
             }
             elseif (strpos($url, 'internupload=success')!==false) {
-                echo "Your Internship was successfully uploaded";
+                echo "<div class=\"alert\">
+                <span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>
+                Your Internship was successfully uploaded</div>";
             }
             //            $results_per_page = 8;
 
@@ -187,9 +188,18 @@ elseif (strpos($url, 'internupload=success')!==false){
                         } else {
                             $msg = "No";
                         }
-                        echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
-            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
 
+                        if(isset($_SESSION['admin'])){
+                            $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                            $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                        }
+                        else {
+                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                        }
                     };
                     echo "<center><div> Page: ";
                     for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -226,8 +236,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                         $msg = "No";
                     }
 
-                    echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                    if(isset($_SESSION['admin'])){
+                        $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                        $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                        echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                    }
+                    else {
+                        echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                    }
                 }
                 echo "<center><div> Page: ";
                 for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -266,8 +285,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                         $msg = "No";
                     }
 
-                    echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                    if(isset($_SESSION['admin'])){
+                        $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                        $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                        echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                    }
+                    else {
+                        echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                    }
                 }
                 echo "<center><div> Page: ";
                 for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -289,8 +317,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                     $msg = "No";
                 }
 
-                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                if(isset($_SESSION['admin'])){
+                    $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                    $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                    echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                }
+                else {
+                    echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                }
 
             }
 
@@ -336,8 +373,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
 
                         };
                         echo "<center><div> Page: ";
@@ -380,8 +426,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
                         };
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -423,8 +478,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
                         };
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -465,8 +529,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
                         };
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -507,8 +580,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -549,8 +631,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
 
                         };
                         echo "<center><div> Page: ";
@@ -592,8 +683,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
 
                         };
                         echo "<center><div> Page: ";
@@ -635,9 +735,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
-            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
 
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
                         };
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -678,8 +786,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
 
                         }
                         echo "<center><div> Page: ";
@@ -721,8 +838,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
 
                         };
                         echo "<center><div> Page: ";
@@ -764,8 +890,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
 
                         };
                         echo "<center><div> Page: ";
@@ -807,8 +942,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
 
                         };
                         echo "<center><div> Page: ";
@@ -849,8 +993,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                                 $msg = "No";
                             }
 
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -889,8 +1042,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
 
                         };
                         echo "<center><div> Page: ";
@@ -927,8 +1089,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
 
                         };
                         echo "<center><div> Page: ";
@@ -964,8 +1135,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
 
                         };
                         echo "<center><div> Page: ";
@@ -1003,8 +1183,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -1041,8 +1230,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -1079,8 +1277,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {
@@ -1117,8 +1324,17 @@ elseif (strpos($url, 'internupload=success')!==false){
                             } else {
                                 $msg = "No";
                             }
-                            echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                            if(isset($_SESSION['admin'])){
+                                $edit = "<a href='edit.php?id=" . $row['internship_Id'] . "' style='padding-right: 8px; float: right;'><img border=\"0\" alt=\"Edit\" src=\"images/editicon.png\" width=\"18\" height=\"18\"></a>";
+                                $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
+
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . " $edit $delete</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+                                  <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
+                            else {
+                                echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
             <p>Deadline: " . $row['date'] . "</p><br><p>CV Required: $msg </p></div>";
+                            }
                         }
                         echo "<center><div> Page: ";
                         for ($page = 1; $page <= $number_of_pages; $page++) {

@@ -19,7 +19,7 @@ elseif (strpos($url, 'error=invalidinfo')!==false){
 }
 
 elseif (strpos($url, 'signup=success')!==false){
-    echo "Congratulations, you have successfully registered. Please enter your username and password at the top of this page to login.";
+    //echo "Congratulations, you have successfully registered. Please enter your username and password at the top of this page to login.";
 }
 
 
@@ -75,12 +75,13 @@ elseif (strpos($url, 'signup=success')!==false){
     border:  solid;
     padding-top:  20px;
     padding-right: 15px;
-    height: 60%;
+    height: auto;
+    margin: 0 auto;
     background-color: ghostwhite">
 
         <div class = "col-xs-6 col-sm-6 col-md-6 col-lg-6" name="announced_iternships">
             <h2>Latest Internships</h2>
-            <div style="overflow-y: scroll; height:400px;">
+            <div style="overflow-y: scroll; height:400px; margin:0 auto;">
                 <!-- Here we put announced internships-->
                 <?php
                 $sql="SELECT * FROM internships ORDER BY internship_Id DESC LIMIT 10";
@@ -90,16 +91,8 @@ elseif (strpos($url, 'signup=success')!==false){
 
                 while($row = mysqli_fetch_array($result))
                 {
-                    if($row['CV']==1) {
-                        $msg = "Yes";
-                    }
-                    else {
-                        $msg = "No";
-                    }
-
-                    echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']."
-                <p>Open Positions: ".$row['open_Positions']."</p>
-                "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
+                    echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br></div>";
 
                 }
                 ?>
@@ -112,6 +105,20 @@ elseif (strpos($url, 'signup=success')!==false){
             <div style = "text-align: center;">
                 <h4> Login </h4>
             </div>
+            <?php
+            $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+            if (strpos($url, 'signup=success')!==false){
+                echo "<div class=\"alert\">
+                <span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>
+               Congratulations, you have successfully registered. Please enter your username and password below to login.</div>";
+            }
+            elseif (strpos($url, 'error=invalidinfo')!==false){
+                echo "<div class=\"erroralert\">
+                <span class=\"closebtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span>
+               Your username and/or password is incorrect</div>";
+            }
+            ?>
 
             <form action='includes/login_inc.php' method='post' class="form-signin" role="form">
 

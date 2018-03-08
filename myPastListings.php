@@ -138,6 +138,9 @@ include 'dbh.php';
             } else {
                 $page = $_GET['page'];
             }
+            $this_page_first_result = ($page-1)*$results_per_page;
+            $sql="SELECT * FROM internships WHERE isarchived=1 AND poster_Id='{$_SESSION['id']}' LIMIT $this_page_first_result ,  $results_per_page";
+            $result = mysqli_query($conn, $sql);
 
 //            if (!$result) {
 //                printf("Error: %s\n", mysqli_error($conn));
@@ -166,12 +169,13 @@ include 'dbh.php';
                         $msg = "No";
                     }
 
-                    $appview = "<a href='viewApplicants.php?id=" . $row['internship_Id'] . "'>View Applicants</a>";
-                    $repost = "<a href='repost.php?id=" . $row['internship_Id'] . "'>Repost</a>";
+                    $appview = "<a href='viewApplicants.php?id=" . $row['internship_Id'] . "&redirect=myPastListings'>View Applicants</a>";
+                    $repost = "<a href='repost.php?id=" . $row['internship_Id'] . "' style='float: right; padding-right: 8px;'><img border=\"0\" alt=\"reupload\" src=\"images/reuploadicon.png\" width=\"20\" height=\"20\"></a>";
+                    $delete = "<a href='delete.php?id=" . $row['internship_Id'] . "' style='float: right;' ><img border=\"0\" alt=\"Delete\" src=\"images/deleteicon.png\" width=\"18\" height=\"18\"></a>";
 
-                    echo "<div class=\"Listing\">" . "Title: " . $row['title'] . "<p>Description: " . $row['description'] . "</p><br>" . " Level: " . $row['internship_Level'] . " 
-    <p>Open Positions: " . $row['open_Positions'] . "</p> 
-    " . " Deadline: " . $row['date'] . "<br><p> Duration: " . $row['duration'] . " Months</p>" . "CV Required: $msg <br> $appview $repost</div>";
+
+                    echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'><a href='viewInternship.php?id=" . $row['internship_Id'] . "&redirect=myPastListings'>" . $row['title'] . " $delete $repost</h4></a> <br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br><br>$appview </div>";
                 }
                 echo "<center><div> Page: ";
                 for ($page = 1; $page <= $number_of_pages; $page++) {

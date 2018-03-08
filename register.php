@@ -73,7 +73,8 @@ elseif (strpos($url, 'signup=success')!==false){
     border:  solid;
     padding-top:  20px;
     padding-right: 15px;
-    height: 60%;
+    height: auto;
+    margin: 0 auto;
     background-color: ghostwhite">
 
         <div class = "col-xs-6 col-sm-6 col-md-6 col-lg-6" name="announced_iternships">
@@ -89,16 +90,9 @@ elseif (strpos($url, 'signup=success')!==false){
 
                 while($row = mysqli_fetch_array($result))
                 {
-                    if($row['CV']==1) {
-                        $msg = "Yes";
-                    }
-                    else {
-                        $msg = "No";
-                    }
 
-                    echo "<div class=\"Listing\">"."Title: ".$row['title']."<p>Description: ".$row['description']."</p><br>"." Level: ".$row['internship_Level']."
-                <p>Open Positions: ".$row['open_Positions']."</p>
-                "." Deadline: ".$row['datetime']."<br><p> Duration: ".$row['duration']." Months</p>"."CV Required: $msg</div>";
+                    echo "<div class=\"Listing\">" . "<h4 style='margin-bottom: 5px;'>" . $row['title'] . "</h4></a><br>" . " Level: " . $row['internship_Level'] . "
+            <p>Deadline: " . $row['date'] . "</p><br></div>";
 
                 }
                 ?>

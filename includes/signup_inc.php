@@ -39,16 +39,27 @@ else {
         $sql2 = "SELECT * FROM admincode WHERE secretcode='$secretcode'";
         $result2 = mysqli_query($conn, $sql2);
 
+        $sql3 = "SELECT * FROM admincode WHERE admincode='$secretcode'";
+        $result3 = mysqli_query($conn, $sql3);
+
         if($row=mysqli_fetch_assoc($result2))
         {
-            $sql= "INSERT INTO users (firstName,lastName,password,email,isLecturer) VALUES ('$firstName','$lastName','$password','$email','1')";
+            $sql= "INSERT INTO users (firstName,lastName,password,email,isLecturer,isAdmin) VALUES ('$firstName','$lastName','$password','$email','1','0')";
+            $result = mysqli_query($conn, $sql);
+            header("Location: ../landingPage.php?signup=success");
+            exit();
+        }
+
+        elseif($row=mysqli_fetch_assoc($result3))
+        {
+            $sql= "INSERT INTO users (firstName,lastName,password,email,isLecturer,isAdmin) VALUES ('$firstName','$lastName','$password','$email','0','1')";
             $result = mysqli_query($conn, $sql);
             header("Location: ../landingPage.php?signup=success");
             exit();
         }
         else {
             if(empty($secretcode)) {
-                $sql = "INSERT INTO users (firstName,lastName,password,email,isLecturer) VALUES ('$firstName','$lastName','$password','$email', '0')";
+                $sql = "INSERT INTO users (firstName,lastName,password,email,isLecturer,isAdmin) VALUES ('$firstName','$lastName','$password','$email', '0','0')";
                 $result = mysqli_query($conn, $sql);
                 header("Location: ../landingPage.php?signup=success");
                 exit();

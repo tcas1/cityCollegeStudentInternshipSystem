@@ -97,7 +97,24 @@ include 'dbh.php';
 
                         <ul class = "nav navbar-nav" style="margin-left: 300px; float:none;">
 
-                            <a href="index.php" class="btn-primary btn-lg" type="reset">Back</a>
+                            <?php
+                            $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+                            if (strpos($url, 'redirect=myCurrentListings')!==false){
+                                echo "<a href=\"myCurrentListings.php\" class=\"btn-primary btn-lg\" type=\"reset\">Back</a>";
+                            }
+
+                            elseif (strpos($url, 'redirect=myPastListings')!==false){
+                                echo "<a href=\"myPastListings.php\" class=\"btn-primary btn-lg\" type=\"reset\">Back</a>";
+                            }
+
+                            else{
+                                echo "<a href=\"index.php\" class=\"btn-primary btn-lg\" type=\"reset\">Back</a>";
+
+                            }
+
+                            ?>
+
                             <a href="createPdf.php/?id=<?php echo $_GET['id'] ?>" target="_blank" class="btn-primary btn-lg" type="submit" >Download PDF</a>
                             <?php
                             if(isset($_SESSION['student'])) {
